@@ -1,0 +1,13 @@
+yarn run v1.22.22
+$ /Users/bap5806/Documents/side-projects/moatlog/node_modules/.bin/moatlog status --verbose '#' should show reads
+● hooks active (.cursor/hooks.json)
+
+  moat strength: building
+  files touched: 61 / 111 files (55%)
+  depth:         311 events · 6 sessions · 2 reads · 320 writes
+  prompt windows:55
+  last distill:  5 min ago
+  window quality:23 high · 14 low · 18 meta
+
+  tip: keep working in Agent mode — reads and edits both deepen your moat
+Done in 0.42s.

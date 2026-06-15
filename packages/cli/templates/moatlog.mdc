@@ -1,0 +1,5 @@
+---
+alwaysApply: true
+---
+
+At the start of every session, call `get_task_context` via the moatlog MCP tool before doing anything else.

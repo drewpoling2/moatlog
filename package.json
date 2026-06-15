@@ -1,0 +1,10 @@
+{
+  "name": "moatlog",
+  "private": true,
+  "license": "MIT",
+  "workspaces": ["packages/*"],
+  "engines": { "node": ">=20.0.0" },
+  "scripts": {
+    "build": "yarn workspace @moatlog/core build && yarn workspace @moatlog/cli build && yarn workspace @moatlog/mcp build"
+  }
+}

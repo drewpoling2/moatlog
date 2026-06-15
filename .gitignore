@@ -1,0 +1,7 @@
+node_modules
+dist
+*.js.map
+.env
+.moatlog/*.jsonl
+.claude/hooks
+.cursor/hooks

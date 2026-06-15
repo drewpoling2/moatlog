@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "hooks": {
+    "beforeReadFile": [{ "command": ".cursor/hooks/moatlog-event.sh" }],
+    "preToolUse": [{ "command": ".cursor/hooks/moatlog-event.sh", "matcher": "Read" }],
+    "postToolUse": [{ "command": ".cursor/hooks/moatlog-event.sh", "matcher": "Read" }],
+    "afterFileEdit": [{ "command": ".cursor/hooks/moatlog-event.sh" }],
+    "beforeSubmitPrompt": [{ "command": ".cursor/hooks/moatlog-event.sh" }],
+    "sessionStart": [{ "command": ".cursor/hooks/moatlog-event.sh" }],
+    "sessionEnd": [{ "command": ".cursor/hooks/moatlog-event.sh" }],
+    "afterShellExecution": [{ "command": ".cursor/hooks/moatlog-event.sh" }],
+    "stop": [
+      { "command": ".cursor/hooks/moatlog-event.sh" },
+      { "command": ".cursor/hooks/moatlog-distill.sh" }
+    ]
+  }
+}

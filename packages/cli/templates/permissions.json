@@ -1,0 +1,8 @@
+{
+  "mcpAllowlist": [
+    "moatlog:get_task_context",
+    "moatlog:get_hot_files",
+    "moatlog:get_file_history",
+    "moatlog:get_co_accessed_files"
+  ]
+}

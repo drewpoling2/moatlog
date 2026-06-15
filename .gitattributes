@@ -1,0 +1,6 @@
+.moatlog/moat.json merge=moatlog-union
+# moatlog skills spec — source of truth, do not merge
+.cursor/rules/moatlog-skills-spec.mdc merge=ours
+# moatlog skills — regenerated on conflict
+.cursor/rules/moatlog-*.mdc merge=moatlog-skills-regen
+AGENTS.md merge=moatlog-skills-regen

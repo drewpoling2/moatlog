@@ -1,0 +1,10 @@
+# moatlog ignore patterns
+# files matching these patterns are excluded from event capture
+# and distillation. syntax is the same as .gitignore.
+.env*
+*.pem
+*.key
+id_rsa*
+*credentials*
+.npmrc
+.moatlog/
