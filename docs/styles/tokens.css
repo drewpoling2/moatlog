@@ -1,0 +1,306 @@
+/* ─── moatlog · Border & Radius Tokens v2 ─────────────────────────────────── */
+/* Sharp edges — terminals are square. Max 4px (device screens: 8px).        */
+
+:root {
+  color-scheme: dark;
+
+  --radius-none: 0px;
+  --radius-xs: 2px;
+  --radius-sm: 3px;
+  --radius-md: 4px;
+  --radius-lg: 5px;
+  --radius-device: 8px;
+  --radius-device-outer: var(--radius-lg);
+  --radius-pill: 9999px;
+  --radius-full: var(--radius-pill);
+
+  --border: 1px solid var(--color-border);
+  --border-subtle: 1px solid var(--color-border-subtle);
+  --border-strong: 1px solid var(--color-border-strong);
+  --border-accent: 1px solid var(--color-accent-border);
+  --border-width-thick: 3px;
+
+  --ring-accent: 0 0 0 2px var(--color-bg), 0 0 0 4px var(--color-accent);
+
+  /* ─── moatlog · Color Tokens v2 ─────────────────────────────────────────── */
+  /* Game Boy DMG palette + semantic dark defaults                             */
+
+  --gb-1: #0f380f;
+  --gb-2: #306230;
+  --gb-3: #8bac0f;
+  --gb-4: #9bbc0f;
+
+  --color-cmd-bg: #8bac0f;
+  --color-cmd-text: #0f380f;
+  --color-cmd-copy-bg: #7a9a0d;
+  --color-cmd-copy-border: rgb(15 56 15 / 0.22);
+
+  /* Neutrals stepped from --color-bg (cool tint preserved at each level) */
+  --color-bg: #131315;
+  --color-bg-elevated: #212123;
+  --color-bg-subtle: #2b2b2c;
+  --color-bg-overlay: #343436;
+
+  --color-fg: #ffffff;
+  --color-fg-muted: #e7e7eb;
+  --color-fg-subtle: #b8b8ba;
+  --color-fg-disabled: #363638;
+  --color-fg-inverted: var(--color-bg);
+
+  --color-accent: var(--gb-3);
+  --color-accent-hover: var(--gb-4);
+  --color-accent-subtle: rgb(139 172 15 / 0.12);
+  --color-accent-dim: rgb(139 172 15 / 0.08);
+  --color-accent-border: rgb(139 172 15 / 0.25);
+
+  --color-screen-bg: #3d5c28;
+  --color-screen-text: #8bac0f;
+  --color-screen-mid: #4a6b35;
+  --color-screen-dim: #2d4a20;
+
+  --color-code-bg: var(--color-screen-bg);
+  --color-code-text: var(--color-screen-text);
+  --color-code-inline-text: var(--color-screen-text);
+  --color-code-header-bg: var(--color-device-outer);
+  --color-code-border-green: var(--gb-2);
+
+  --color-border: rgb(255 255 255 / 0.08);
+  --color-border-subtle: rgb(255 255 255 / 0.04);
+  --color-border-strong: rgb(255 255 255 / 0.14);
+
+  --color-device-outer: #2e2e30;
+  --color-device-screen: #2a2b30;
+  --color-device-chrome-text: #727273;
+  --color-device-border: rgb(255 255 255 / 0.12);
+
+  --border-device: 1px solid var(--color-device-border);
+
+  --color-wordmark-border: rgb(255 255 255 / 0.45);
+
+  --color-nav-btn-bg: transparent;
+  --color-nav-btn-text: var(--color-fg);
+  --color-nav-btn-border: rgb(255 255 255 / 0.35);
+
+  --color-callout-bg: var(--color-bg-elevated);
+  --color-callout-border: var(--color-border-subtle);
+
+  --color-error: #f87171;
+  --color-warning: #fbbf24;
+  --color-success: var(--gb-4);
+  --color-info: #60a5fa;
+
+  --syn-base: #c8c8c0;
+  --syn-comment: #4a6040;
+  --syn-string: #8bac0f;
+  --syn-keyword: #9b7fa6;
+  --syn-function: #7aaac8;
+  --syn-number: #c8a050;
+  --syn-variable: #6db87a;
+  --syn-type: #c87a6b;
+  --syn-operator: #8a8a78;
+  --syn-punctuation: #5a5a50;
+  --syn-tag: #9b7fa6;
+  --syn-attr: #7aaac8;
+
+  /* ─── moatlog · Spacing Tokens ─────────────────────────────────────────── */
+
+  --space-0: 0px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-14: 56px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-28: 112px;
+  --space-32: 128px;
+  --space-40: 160px;
+
+  --container-max: 1200px;
+  --container-wide: 1440px;
+  --container-landing: 1280px;
+  --container-narrow: 720px;
+  --container-landing-narrow: 1080px;
+  --container-px: 32px;
+  --container-landing-px: 32px;
+
+  --inset-xs: var(--space-1) var(--space-2);
+  --inset-sm: var(--space-1) var(--space-3);
+  --inset-md: var(--space-2) var(--space-4);
+  --inset-lg: var(--space-3) var(--space-6);
+
+  /* ─── moatlog · Typography Tokens v2 ───────────────────────────────────── */
+
+  --font-heading: 'Google Sans Code', 'Space Mono', monospace;
+  --font-body: 'Roboto', system-ui, -apple-system, sans-serif;
+  --font-mono: 'Google Sans Code', 'Space Mono', monospace;
+  --font-code: var(--font-mono);
+  --font-sans: var(--font-body);
+
+  --text-2xs: 0.6875rem; /* 11px */
+  --text-xs: 0.75rem; /* 12px */
+  --text-sm: 0.875rem; /* 14px */
+  --text-base: 1rem; /* 16px */
+  --text-lg: 1.125rem; /* 18px */
+  --text-xl: 1.25rem; /* 20px */
+  --text-2xl: 1.5rem; /* 24px */
+  --text-3xl: 1.75rem; /* 28px */
+  --text-4xl: 2.25rem; /* 36px */
+  --text-5xl: 2.75rem; /* 44px */
+  --text-6xl: 3.5rem; /* 56px */
+  --text-7xl: 4.5rem; /* 72px */
+
+  --text-logo-dot: 0.625rem;
+  --text-inline-code-scale: 0.9em;
+
+  --weight-light: 300;
+  --weight-normal: 400;
+  --weight-medium: 500;
+  --weight-bold: 700;
+  --weight-semibold: 600;
+  --weight-strong: 700;
+
+  --leading-none: 1;
+  --leading-tightest: 1.05;
+  --leading-tight: 1.15;
+  --leading-snug: 1.3;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.65;
+  --leading-loose: 1.8;
+
+  --tracking-tightest: -0.02em;
+  --tracking-tight: -0.01em;
+  --tracking-snug: 0;
+  --tracking-normal: 0.01em;
+  --tracking-wide: 0.025em;
+  --tracking-wider: 0.05em;
+  --tracking-widest: 0.1em;
+
+  --underline-offset-link: 2px;
+
+  /* ─── moatlog · Doc aliases (components) ───────────────────────────────── */
+
+  --bg: var(--color-bg);
+  --surface: var(--color-bg);
+  --surface-raised: var(--color-bg-elevated);
+  --surface-nested: var(--color-bg-subtle);
+  --surface-overlay: var(--color-bg-overlay);
+  --text: var(--color-fg);
+  --text-muted: var(--color-fg-muted);
+  --text-dim: var(--color-fg-subtle);
+  --accent: var(--color-accent);
+  --accent-hover: var(--color-screen-text);
+  --accent-subtle: var(--color-accent-subtle);
+  --code-bg: var(--color-code-bg);
+  --code-text: var(--color-code-text);
+  --code-surface: var(--color-bg-elevated);
+  --code-muted: var(--color-fg-subtle);
+  --code-border: var(--color-border);
+
+  --font-size-xs: var(--text-xs);
+  --font-size-sm: var(--text-sm);
+  --font-size-base: var(--text-base);
+  --font-size-lg: var(--text-lg);
+  --font-size-xl: var(--text-xl);
+  --font-size-2xl: var(--text-2xl);
+  --font-size-3xl: var(--text-3xl);
+  --font-size-4xl: var(--text-4xl);
+
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-md: 0 4px 12px rgb(0 0 0 / 0.35);
+
+  /* ─── moatlog · Doc layout ─────────────────────────────────────────────── */
+
+  --header-height: 3.5rem;
+  --sidebar-width: 16rem;
+  --toc-width: 14rem;
+  --content-max-width: 45rem;
+  --layout-shell-max: none;
+  --layout-gutter: var(--space-12);
+
+  --z-header: 50;
+  --transition-color: 0.15s ease;
+
+  --breakpoint-toc: 1100px;
+  --breakpoint-header: 900px;
+  --breakpoint-shell: 720px;
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+
+  /* Neutrals stepped from --color-bg (warm tint preserved at each level) */
+  --color-bg: #f7f7f4;
+  --color-bg-elevated: #fbfbf8;
+  --color-bg-subtle: #e1e1de;
+  --color-bg-overlay: #d8d8d5;
+
+  --color-fg: #1b1b1a;
+  --color-fg-muted: #4c4c4a;
+  --color-fg-subtle: #797977;
+  --color-fg-disabled: #c3c3bb;
+  --color-fg-inverted: var(--color-bg);
+
+  --color-accent: #6b8f0a;
+  --color-accent-hover: var(--color-screen-mid);
+  --color-accent-subtle: rgb(107 143 10 / 0.1);
+  --color-accent-dim: rgb(107 143 10 / 0.06);
+  --color-accent-border: rgb(107 143 10 / 0.3);
+
+  --color-screen-bg: #9bbc0f;
+  --color-screen-text: #0f380f;
+  --color-screen-mid: #1a4a1a;
+  --color-screen-dim: #306230;
+
+  --color-border: rgb(83 86 97 / 0.14);
+  --color-border-subtle: rgb(83 86 97 / 0.08);
+  --color-border-strong: rgb(83 86 97 / 0.22);
+
+  --color-device-outer: #535661;
+  --color-device-screen: #2a2b30;
+  --color-device-chrome-text: #b8bac2;
+  --color-device-border: rgb(42 43 48 / 0.55);
+  --color-device-screen-text: #f1f1ed;
+  --color-device-screen-text-muted: #95958f;
+  --color-device-screen-prompt: #b8bac2;
+  --color-device-screen-dim: #767880;
+
+  --color-wordmark-border: var(--color-fg);
+
+  --color-cmd-bg: #306230;
+  --color-cmd-text: #9bbc0f;
+  --color-cmd-copy-bg: #0f380f;
+  --color-cmd-copy-border: rgb(15 56 15 / 0.35);
+
+  --color-nav-btn-bg: var(--color-fg);
+  --color-nav-btn-text: #ffffff;
+  --color-nav-btn-border: var(--color-fg);
+
+  --color-callout-bg: var(--color-bg-elevated);
+  --color-callout-border: var(--color-border-subtle);
+
+  --syn-base: #1a1a14;
+  --syn-comment: #5a7a50;
+  --syn-string: #4a7010;
+  --syn-keyword: #7a4a8a;
+  --syn-function: #2a5a8a;
+  --syn-number: #8a6010;
+  --syn-variable: #2a6a3a;
+  --syn-type: #a04a3a;
+  --syn-operator: #5a5a4a;
+  --syn-punctuation: #4a4a3a;
+
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.06);
+  --shadow-md: 0 4px 12px rgb(0 0 0 / 0.08);
+}
+
+:root.dark {
+  color-scheme: dark;
+}

@@ -1,0 +1,89 @@
+/* ── moatlog · toc ── */
+
+.docs-toc {
+  grid-column: 5;
+  justify-self: end;
+  width: var(--toc-width);
+}
+
+.docs-toc-title {
+  margin: 0 0 var(--space-3);
+  font-family: var(--font-code);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-fg-subtle);
+}
+
+.docs-toc-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.docs-toc-item a {
+  display: block;
+  padding: var(--space-1) 0;
+  font-family: var(--font-code);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  line-height: var(--leading-normal);
+  transition: color var(--transition-color);
+}
+
+.docs-toc-item a:hover {
+  color: var(--text);
+}
+
+.docs-toc-level-3 a {
+  padding-left: var(--space-3);
+}
+
+.docs-toc-level-4 a {
+  padding-left: var(--space-6);
+}
+
+.docs-toc-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.docs-toc-actions--bordered {
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: var(--border-subtle);
+}
+
+.docs-toc-action {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: var(--space-1) 0;
+  border: 0;
+  background: none;
+  font-family: var(--font-code);
+  font-size: var(--text-xs);
+  color: var(--text-dim);
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color var(--transition-color);
+}
+
+.docs-toc-action:hover {
+  color: var(--text);
+}
+
+@media (max-width: 1100px) {
+  .docs-toc {
+    display: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .docs-toc {
+    grid-column: 1;
+  }
+}

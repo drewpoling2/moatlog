@@ -1,0 +1,298 @@
+{
+  "title": "moat.json Reference",
+  "slug": "moat-json",
+  "content": [
+    {
+      "type": "heading",
+      "level": 1,
+      "text": "moat.json Reference"
+    },
+    {
+      "type": "paragraph",
+      "text": "moat.json is the distilled behavioral memory for your project — an open, standardized JSON file that captures what agents actually do. moatlog distill generates it from .moatlog/events-*.jsonl. The _generated field marks it as machine-owned — edit events or re-distill instead of hand-editing the file."
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "value": "Because moat.json is " },
+        { "type": "strong", "content": [{ "type": "text", "value": "committed to git" }] },
+        { "type": "text", "value": ", " },
+        { "type": "strong", "content": [{ "type": "text", "value": "version-stable" }] },
+        { "type": "text", "value": ", and " },
+        { "type": "strong", "content": [{ "type": "text", "value": "well-defined" }] },
+        { "type": "text", "value": ", it's designed as an open contract for tool integration. Any tool — IDE extensions, LLM systems, code analysis platforms, security scanners — can read moat.json to understand project structure, agent behavior patterns, and high-context file relationships." }
+      ]
+    },
+    {
+      "type": "callout",
+      "variant": "info",
+      "title": "Open format for your whole toolchain",
+      "text": "moat.json is not moatlog-specific. Read the schema, build integrations, and plug moat.json into your tools. The format is versioned and stable — breaking changes require a new _version number."
+    },
+    {
+      "type": "callout",
+      "variant": "warning",
+      "title": "Commit moat.json to share context with your team",
+      "text": "moat.json is safe to commit (unlike raw event logs). Team members get hot files, co-access patterns, and prompt windows without replaying your session history. Add .moatlog/*.jsonl to .gitignore."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Schema"
+    },
+    {
+      "type": "code",
+      "language": "json",
+      "code": "{\n  // Machine notice — do not edit manually\n  \"_generated\": \"do not edit manually — run moatlog distill to regenerate\",\n  \"_version\": \"1.5.0\",\n\n  // Project identity\n  \"scope\": \"root\",\n  \"projectName\": \"moatlog\",\n  \"generatedAt\": \"2026-06-14T18:43:30.866Z\",\n  \"generatedFrom\": \"415 events across 18 sessions\",\n\n  // Summary stats (path-tracked cursor events only)\n  \"totalEvents\": 415,\n  \"totalSessions\": 18,\n\n  // Distillation health signals\n  \"dataHealth\": {\n    \"readsCaptured\": true,\n    \"windowCounts\": { \"high\": 26, \"low\": 20, \"meta\": 163 }\n  },\n\n  // Ranked file profiles — hotFiles[0] is most active\n  \"hotFiles\": [\n    {\n      \"relativePath\": \"docs/app/globals.css\",\n      \"agents\": [\"cursor\"],\n      \"readCount\": 0,\n      \"writeCount\": 57,\n      \"totalEvents\": 57,\n      \"sessionsAppeared\": 5,\n      \"coAccessedWith\": [\n        { \"path\": \"docs/app/layout.tsx\", \"support\": 8 },\n        { \"path\": \"docs/app/docs/DocsHeader.tsx\", \"support\": 6 }\n      ]\n    },\n    {\n      \"relativePath\": \"packages/mcp/src/server.ts\",\n      \"agents\": [\"cursor\"],\n      \"readCount\": 0,\n      \"writeCount\": 43,\n      \"totalEvents\": 43,\n      \"sessionsAppeared\": 2,\n      \"coAccessedWith\": [\n        { \"path\": \"packages/core/src/types.ts\", \"support\": 4 },\n        { \"path\": \"packages/core/src/distiller.ts\", \"support\": 4 }\n      ]\n    },\n    {\n      \"relativePath\": \"docs/styles/tokens.css\",\n      \"agents\": [\"cursor\"],\n      \"readCount\": 2,\n      \"writeCount\": 15,\n      \"totalEvents\": 17,\n      \"sessionsAppeared\": 4,\n      \"coAccessedWith\": [\n        { \"path\": \"docs/app/layout.tsx\", \"support\": 4 },\n        { \"path\": \"docs/styles/base.css\", \"support\": 3 }\n      ]\n    }\n  ],\n\n  // Prompt windows — each prompt_start closed by agent_stop\n  \"promptWindows\": [\n    {\n      \"id\": \"9430c8f9-937d-4fa9-acb8-bc6aed4135b5\",\n      \"timestamp\": \"2026-06-11T05:25:46.000Z\",\n      \"sessionId\": \"8a88eb30-578a-4220-8789-0508c6d70653\",\n      \"agent\": \"cursor\",\n      \"files\": [\n        \"docs/lib/docs.ts\",\n        \"docs/content/index.json\",\n        \"docs/content/how-it-works.json\",\n        \"docs/content/moat-json.json\"\n      ],\n      \"taskExcerpt\": \"Build the docs site content. We have the renderer working — now write the actual pages…\",\n      \"windowQuality\": \"high\",\n      \"pathsInTask\": [\"docs/content/index.json\"]\n    },\n    {\n      \"id\": \"6eb22449-78b4-41ae-8893-cddc9cbc5f23\",\n      \"timestamp\": \"2026-06-11T05:38:03.000Z\",\n      \"sessionId\": \"8a88eb30-578a-4220-8789-0508c6d70653\",\n      \"agent\": \"cursor\",\n      \"files\": [\n        \"docs/content/index.json\",\n        \"docs/app/docs/DocsHeader.tsx\",\n        \"docs/app/globals.css\"\n      ],\n      \"taskExcerpt\": \"Send these fixes to Cursor — sidebar cleanup, rename Watch→Capture…\",\n      \"windowQuality\": \"high\"\n    }\n  ],\n\n  // Recurring file clusters from prompt windows\n  \"taskFileSets\": [\n    {\n      \"id\": \"tfs-0-docs_content_getting_started_json_docs_c\",\n      \"files\": [\n        \"docs/content/getting-started.json\",\n        \"docs/content/how-it-works.json\",\n        \"docs/content/index.json\",\n        \"docs/lib/docs.ts\"\n      ],\n      \"occurrences\": 2,\n      \"lastSeen\": \"2026-06-11T18:41:26.000Z\"\n    }\n  ],\n\n  // Event counts by file extension\n  \"extensionBreakdown\": {\n    \".ts\": 170,\n    \".css\": 143,\n    \".tsx\": 65,\n    \".json\": 16\n  }\n}"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Field reference"
+    },
+    {
+      "type": "table",
+      "header": [
+        [{ "type": "text", "value": "Field" }],
+        [{ "type": "text", "value": "Type" }],
+        [{ "type": "text", "value": "Description" }],
+        [{ "type": "text", "value": "Use cases" }]
+      ],
+      "rows": [
+        [
+          [{ "type": "inlineCode", "value": "_generated" }],
+          [{ "type": "text", "value": "string" }],
+          [{ "type": "text", "value": "Machine notice. Do not edit manually." }],
+          [{ "type": "text", "value": "Signals that file is auto-generated; skip if your tool regenerates it." }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "_version" }],
+          [{ "type": "text", "value": "string" }],
+          [{ "type": "text", "value": "Schema version. Current: 1.5.0. Breaking changes require a new version number." }],
+          [{ "type": "text", "value": "Check version before parsing; handle version-specific fields conditionally." }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "scope" }],
+          [{ "type": "text", "value": "string" }],
+          [{ "type": "text", "value": "Scope of the moat: 'root' or nested path (future). Monorepo support." }],
+          [{ "type": "text", "value": "Filter which moats to use in multi-moat projects." }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "projectName" }],
+          [{ "type": "text", "value": "string" }],
+          [{ "type": "text", "value": "Project identifier from git root or config." }],
+          [{ "type": "text", "value": "Match moat.json to the right project in multi-project tooling." }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "generatedAt" }],
+          [{ "type": "text", "value": "ISO timestamp" }],
+          [{ "type": "text", "value": "When this moat was last distilled." }],
+          [{ "type": "text", "value": "Check staleness; decide whether to re-distill before using. Warn if older than N days." }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "generatedFrom" }],
+          [{ "type": "text", "value": "string" }],
+          [{ "type": "text", "value": "Summary: '415 events across 18 sessions'." }],
+          [{ "type": "text", "value": "Assess moat coverage; skip if too sparse (fewer than N events or sessions)." }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "totalEvents" }],
+          [{ "type": "text", "value": "number" }],
+          [{ "type": "text", "value": "Count of path-tracked events (reads, writes, deletes, renames)." }],
+          [{ "type": "text", "value": "Confidence signal; higher event count = more reliable patterns." }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "dataHealth" }],
+          [{ "type": "text", "value": "object" }],
+          [{ "type": "text", "value": "readsCaptured (boolean) and windowCounts by quality (high / low / meta)." }],
+          [{ "type": "text", "value": "Assess data quality; warn if readsCaptured is false. Use quality counts for retrieval thresholds." }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "hotFiles" }],
+          [{ "type": "text", "value": "FileProfile[]" }],
+          [{ "type": "text", "value": "Ranked by totalEvents. Each has agents[], readCount, writeCount, sessionsAppeared, coAccessedWith (support scores)." }],
+          [
+            { "type": "text", "value": "Navigation/routing (prioritize hot files), code review context, architectural analysis, impact analysis (changed file affects coAccessedWith?), dependency inference, test selection (which tests touch these files?), security scanning (prioritize hot files for audit)." }
+          ]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "promptWindows" }],
+          [{ "type": "text", "value": "PromptWindow[]" }],
+          [{ "type": "text", "value": "Each prompt_start closed by agent_stop. Includes taskExcerpt (first ~200 chars of the prompt), windowQuality (high/low/meta), files touched in that context window." }],
+          [
+            { "type": "text", "value": "Semantic search (match new prompts to past windows), task history (what has this team been working on?), context retrieval (given a prompt, which files are relevant?), documentation generation (extract prompts as inline docs)." }
+          ]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "taskFileSets" }],
+          [{ "type": "text", "value": "TaskFileSet[]" }],
+          [{ "type": "text", "value": "Recurring file clusters from prompt windows. Each has files[], occurrences count, and lastSeen timestamp." }],
+          [
+            { "type": "text", "value": "Task routing (map new tasks to past patterns), test suite optimization (which files change together?), change impact (editing file A likely affects files B, C, D), code review workflows (file clusters that always change together can be reviewed as a unit)." }
+          ]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "sessions" }],
+          [{ "type": "text", "value": "Session[]" }],
+          [{ "type": "text", "value": "Session metadata: startedAt, endedAt, eventCount, agent name, filesRead/filesWritten." }],
+          [{ "type": "text", "value": "Session-level analytics (duration, scope), agent-specific insights, timeline reconstruction." }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "extensionBreakdown" }],
+          [{ "type": "text", "value": "Record<string, number>" }],
+          [{ "type": "text", "value": "Event counts grouped by file extension (.ts, .css, .json, etc.)." }],
+          [{ "type": "text", "value": "Language-specific tooling (which languages are active?), linter/formatter config (run tools for active extensions first), polyglot project dashboard." }]
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Integration patterns"
+    },
+    {
+      "type": "paragraph",
+      "text": "Third-party tools can read moat.json from your repository to enhance their own features. No API calls required — the file is always available in git."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Reading moat.json"
+    },
+    {
+      "type": "paragraph",
+      "text": "moat.json is a standard JSON file. Read it from disk, parse it, check the _version, and use the fields you need:"
+    },
+    {
+      "type": "code",
+      "language": "typescript",
+      "code": "import fs from 'fs';\n\nconst moat = JSON.parse(fs.readFileSync('.moatlog/moat.json', 'utf-8'));\n\nif (moat._version !== '1.5.0') {\n  console.warn(`moat.json version ${moat._version} — some fields may differ`);\n}\n\n// Get hot files\nconst hotFiles = moat.hotFiles.slice(0, 10);\n\n// Find files touched by recent prompts\nconst recentWindows = moat.promptWindows.filter(\n  w => new Date(w.timestamp) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)\n);\n\n// Get file clusters that change together\nconst fileClusters = moat.taskFileSets\n  .filter(ts => ts.occurrences >= 2)\n  .map(ts => ts.files);"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Example integrations"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "content": [
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "strong",
+              "content": [{ "type": "text", "value": "IDE extensions" }]
+            },
+            {
+              "type": "text",
+              "value": " — Use hotFiles for quick navigation suggestions, or taskFileSets to suggest related files when editing."
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "strong",
+              "content": [{ "type": "text", "value": "Code review tools" }]
+            },
+            {
+              "type": "text",
+              "value": " — Highlight files with high co-access counts as ones that should be reviewed together."
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "strong",
+              "content": [{ "type": "text", "value": "Test runners" }]
+            },
+            {
+              "type": "text",
+              "value": " — Use hotFiles and co-access patterns to select tests most likely to catch regressions in changed code."
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "strong",
+              "content": [{ "type": "text", "value": "LLM context selection" }]
+            },
+            {
+              "type": "text",
+              "value": " — Feed hotFiles, taskFileSets, and prompt windows to an LLM system to auto-populate context for code generation."
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "strong",
+              "content": [{ "type": "text", "value": "Architecture / dependency analysis" }]
+            },
+            {
+              "type": "text",
+              "value": " — coAccessedWith edges reveal actual behavioral dependencies (not just import statements)."
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "strong",
+              "content": [{ "type": "text", "value": "Documentation generators" }]
+            },
+            {
+              "type": "text",
+              "value": " — Extract taskExcerpt from promptWindows to auto-generate decision records, architectural ADRs, or file overviews."
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "strong",
+              "content": [{ "type": "text", "value": "Security scanning" }]
+            },
+            {
+              "type": "text",
+              "value": " — Prioritize hotFiles for security audit. dataHealth signals help you assess coverage."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "variant": "info",
+      "title": "No lock-in, no single source of truth",
+      "text": "moat.json is a public file format, not a moatlog-only feature. Build on it, redistribute it, or integrate it into other tools without asking permission. The schema is versioned so you can handle changes gracefully."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Regenerating"
+    },
+    {
+      "type": "command",
+      "command": "moatlog distill",
+      "description": "Regenerate moat.json from event logs"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "value": "Validate with " },
+        { "type": "inlineCode", "value": "moatlog check-moat" },
+        { "type": "text", "value": " to confirm moat.json is fresh relative to current events." }
+      ]
+    }
+  ]
+}

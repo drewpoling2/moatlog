@@ -1,0 +1,43 @@
+/* ── moatlog · marketing nav ── */
+
+.landing-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+  border-bottom: var(--border-subtle);
+  background: var(--color-bg);
+}
+
+.landing-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  width: 100%;
+  max-width: var(--container-landing);
+  margin: 0 auto;
+  padding: var(--space-3) var(--container-landing-px);
+  min-height: var(--header-height);
+}
+
+.landing-header-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.landing-header-link {
+  font-size: var(--text-sm);
+  color: var(--color-fg-muted);
+  transition: color var(--transition-color);
+}
+
+.landing-header-link:hover {
+  color: var(--color-fg);
+}
+
+@media (max-width: 720px) {
+  .landing-header-nav .landing-header-link {
+    display: none;
+  }
+}

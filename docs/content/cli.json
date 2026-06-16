@@ -1,0 +1,554 @@
+{
+  "title": "CLI Reference",
+  "slug": "cli",
+  "content": [
+    {
+      "type": "heading",
+      "level": 1,
+      "text": "CLI Reference"
+    },
+    {
+      "type": "paragraph",
+      "text": "Complete reference for all Moatlog CLI commands."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "moatlog init"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "value": "Usage: " },
+        {
+          "type": "inlineCode",
+          "value": "moatlog init [--force] [--agent cursor|claude-code|all]"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Scaffold hooks, MCP config, rules, and .moatlog/."
+    },
+    {
+      "type": "table",
+      "header": [
+        [{ "type": "text", "value": "Flag" }],
+        [{ "type": "text", "value": "Type" }],
+        [{ "type": "text", "value": "Default" }],
+        [{ "type": "text", "value": "Description" }]
+      ],
+      "rows": [
+        [
+          [{ "type": "inlineCode", "value": "--force" }],
+          [{ "type": "text", "value": "boolean" }],
+          [{ "type": "text", "value": "false" }],
+          [{ "type": "text", "value": "Overwrite existing scaffold files" }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "--agent" }],
+          [{ "type": "text", "value": "cursor | claude-code | all" }],
+          [{ "type": "text", "value": "auto" }],
+          [
+            {
+              "type": "text",
+              "value": "Which agent hooks to scaffold. auto always scaffolds Cursor; also scaffolds Claude Code when .claude/ exists or claude is on PATH"
+            }
+          ]
+        ]
+      ]
+    },
+    {
+      "type": "code",
+      "language": "shell",
+      "code": "$ moatlog init"
+    },
+    {
+      "type": "callout",
+      "variant": "info",
+      "title": "Safe to re-run",
+      "text": "init skips files that already exist unless you pass --force. Existing .claude/settings.json is merged (hooks key only), not overwritten."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "moatlog status"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "value": "Usage: " },
+        { "type": "inlineCode", "value": "moatlog status [--verbose]" }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Hooks status and moat strength."
+    },
+    {
+      "type": "table",
+      "header": [
+        [{ "type": "text", "value": "Flag" }],
+        [{ "type": "text", "value": "Type" }],
+        [{ "type": "text", "value": "Default" }],
+        [{ "type": "text", "value": "Description" }]
+      ],
+      "rows": [
+        [
+          [{ "type": "inlineCode", "value": "--verbose" }],
+          [{ "type": "text", "value": "boolean" }],
+          [{ "type": "text", "value": "false" }],
+          [
+            {
+              "type": "text",
+              "value": "Show window quality breakdown (high / low / meta). Also accepted as --detail"
+            }
+          ]
+        ]
+      ]
+    },
+    {
+      "type": "code",
+      "language": "shell",
+      "code": "$ moatlog status"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "moatlog distill"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "value": "Usage: " },
+        { "type": "inlineCode", "value": "moatlog distill [days]" }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Compress events into moat.json."
+    },
+    {
+      "type": "table",
+      "header": [
+        [{ "type": "text", "value": "Argument" }],
+        [{ "type": "text", "value": "Type" }],
+        [{ "type": "text", "value": "Default" }],
+        [{ "type": "text", "value": "Description" }]
+      ],
+      "rows": [
+        [
+          [{ "type": "inlineCode", "value": "days" }],
+          [{ "type": "text", "value": "number" }],
+          [{ "type": "text", "value": "30" }],
+          [
+            {
+              "type": "text",
+              "value": "How many days of event logs to include"
+            }
+          ]
+        ]
+      ]
+    },
+    {
+      "type": "code",
+      "language": "shell",
+      "code": "$ moatlog distill"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "moatlog report"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "value": "Usage: " },
+        { "type": "inlineCode", "value": "moatlog report [--by-agent]" }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Show what your agent has been doing."
+    },
+    {
+      "type": "table",
+      "header": [
+        [{ "type": "text", "value": "Flag" }],
+        [{ "type": "text", "value": "Type" }],
+        [{ "type": "text", "value": "Default" }],
+        [{ "type": "text", "value": "Description" }]
+      ],
+      "rows": [
+        [
+          [{ "type": "inlineCode", "value": "--by-agent" }],
+          [{ "type": "text", "value": "boolean" }],
+          [{ "type": "text", "value": "false" }],
+          [{ "type": "text", "value": "Group report output by agent" }]
+        ]
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "With --by-agent, hot files are grouped under each agent name and session count."
+    },
+    {
+      "type": "code",
+      "language": "shell",
+      "code": "$ moatlog report"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "moatlog check-moat"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "value": "Usage: " },
+        { "type": "inlineCode", "value": "moatlog check-moat [days]" }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Validate moat.json exists and is fresh."
+    },
+    {
+      "type": "table",
+      "header": [
+        [{ "type": "text", "value": "Argument" }],
+        [{ "type": "text", "value": "Type" }],
+        [{ "type": "text", "value": "Default" }],
+        [{ "type": "text", "value": "Description" }]
+      ],
+      "rows": [
+        [
+          [{ "type": "inlineCode", "value": "days" }],
+          [{ "type": "text", "value": "number" }],
+          [{ "type": "text", "value": "30" }],
+          [
+            {
+              "type": "text",
+              "value": "Event log window to compare against moat.json generatedAt"
+            }
+          ]
+        ]
+      ]
+    },
+    {
+      "type": "code",
+      "language": "shell",
+      "code": "$ moatlog check-moat"
+    },
+    {
+      "type": "callout",
+      "variant": "warning",
+      "title": "Exit code 1 on failure",
+      "text": "Exits with an error if moat.json is missing, has an invalid shape, schema is outdated, or events have accumulated since the last distill."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "moatlog doctor"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "value": "Usage: " },
+        { "type": "inlineCode", "value": "moatlog doctor" }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Health check for hooks, MCP, moat.json, permissions."
+    },
+    {
+      "type": "code",
+      "language": "shell",
+      "code": "$ moatlog doctor"
+    },
+    {
+      "type": "callout",
+      "variant": "warning",
+      "title": "Exit code 1 on failure",
+      "text": "Exits with a count of failed checks when hooks, read capture, MCP, moat.json, or permissions are not wired correctly."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "moatlog merge"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "value": "Usage: " },
+        {
+          "type": "inlineCode",
+          "value": "moatlog merge [--branch <branch>] [--dry-run] [--no-llm]"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Merge another branch's moat.json into the current one."
+    },
+    {
+      "type": "table",
+      "header": [
+        [{ "type": "text", "value": "Flag" }],
+        [{ "type": "text", "value": "Type" }],
+        [{ "type": "text", "value": "Default" }],
+        [{ "type": "text", "value": "Description" }]
+      ],
+      "rows": [
+        [
+          [{ "type": "inlineCode", "value": "--branch" }],
+          [{ "type": "text", "value": "string" }],
+          [{ "type": "text", "value": "main" }],
+          [{ "type": "text", "value": "Branch to merge from" }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "--dry-run" }],
+          [{ "type": "text", "value": "boolean" }],
+          [{ "type": "text", "value": "false" }],
+          [
+            {
+              "type": "text",
+              "value": "Show what would change without writing moat.json"
+            }
+          ]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "--no-llm" }],
+          [{ "type": "text", "value": "boolean" }],
+          [{ "type": "text", "value": "false" }],
+          [
+            {
+              "type": "text",
+              "value": "Deterministic pass only; surface conflicts as text"
+            }
+          ]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "--help" }],
+          [{ "type": "text", "value": "boolean" }],
+          [{ "type": "text", "value": "false" }],
+          [{ "type": "text", "value": "Show help" }]
+        ]
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Reads base, ours, and theirs moat.json from git (three-way when a common ancestor exists; two-way otherwise). Unresolved conflicts can be sent to cursor, claude, or ANTHROPIC_API_KEY for automatic resolution unless --no-llm is set."
+    },
+    {
+      "type": "code",
+      "language": "shell",
+      "code": "$ moatlog merge"
+    },
+    {
+      "type": "code",
+      "language": "shell",
+      "code": "$ moatlog merge --help\n\nmoatlog merge — merge another branch's moat.json into the current one\n\nUsage:\n  moatlog merge [--branch <branch>] [--dry-run] [--no-llm]\n\nOptions:\n  --branch <branch>  Branch to merge from (default: main)\n  --dry-run          Show what would change without writing moat.json\n  --no-llm           Deterministic pass only; surface conflicts as text\n  --help             Show this help"
+    },
+    {
+      "type": "paragraph",
+      "text": "On success, prints a summary from formatMergeSummary (e.g. merged: N new files from theirs, N files with summed counts, N new prompt windows — no conflicts, moat.json updated) and saves .moatlog/moat.json unless --dry-run is set."
+    },
+    {
+      "type": "callout",
+      "variant": "info",
+      "title": "Git merge driver",
+      "text": "moatlog init registers a git merge driver for .moatlog/moat.json (merge=moatlog-union). The driver runs moatlog merge-driver with ancestor, current, and other file paths."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "moatlog eval"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "value": "Usage: " },
+        {
+          "type": "inlineCode",
+          "value": "moatlog eval [--threshold <n>] [--limit <n>] [--baseline] [--json]"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Offline retrieval quality report."
+    },
+    {
+      "type": "table",
+      "header": [
+        [{ "type": "text", "value": "Flag" }],
+        [{ "type": "text", "value": "Type" }],
+        [{ "type": "text", "value": "Default" }],
+        [{ "type": "text", "value": "Description" }]
+      ],
+      "rows": [
+        [
+          [{ "type": "inlineCode", "value": "--threshold" }],
+          [{ "type": "text", "value": "number" }],
+          [{ "type": "text", "value": "2" }],
+          [
+            {
+              "type": "text",
+              "value": "Minimum file count for a window to be included"
+            }
+          ]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "--limit" }],
+          [{ "type": "text", "value": "number" }],
+          [{ "type": "text", "value": "all qualifying" }],
+          [{ "type": "text", "value": "Max windows to evaluate" }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "--baseline" }],
+          [{ "type": "text", "value": "boolean" }],
+          [{ "type": "text", "value": "false" }],
+          [
+            {
+              "type": "text",
+              "value": "Also run naive hot-file baseline for comparison"
+            }
+          ]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "--json" }],
+          [{ "type": "text", "value": "boolean" }],
+          [{ "type": "text", "value": "false" }],
+          [{ "type": "text", "value": "Output full results as JSON" }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "--help" }],
+          [{ "type": "text", "value": "boolean" }],
+          [{ "type": "text", "value": "false" }],
+          [{ "type": "text", "value": "Show help" }]
+        ]
+      ]
+    },
+    {
+      "type": "code",
+      "language": "shell",
+      "code": "$ moatlog eval --baseline"
+    },
+    {
+      "type": "callout",
+      "variant": "info",
+      "title": "Requires moat.json",
+      "text": "Exits with an error if moat.json is missing. Reports insufficient data when fewer than 5 qualifying windows are available."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "moatlog clean"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "value": "Usage: " },
+        { "type": "inlineCode", "value": "moatlog clean [--all] [--keep N]" }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Delete old event logs (keeps 30 days)."
+    },
+    {
+      "type": "table",
+      "header": [
+        [{ "type": "text", "value": "Flag" }],
+        [{ "type": "text", "value": "Type" }],
+        [{ "type": "text", "value": "Default" }],
+        [{ "type": "text", "value": "Description" }]
+      ],
+      "rows": [
+        [
+          [{ "type": "inlineCode", "value": "--all" }],
+          [{ "type": "text", "value": "boolean" }],
+          [{ "type": "text", "value": "false" }],
+          [{ "type": "text", "value": "Delete all event logs" }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "--keep" }],
+          [{ "type": "text", "value": "number" }],
+          [{ "type": "text", "value": "30" }],
+          [{ "type": "text", "value": "Keep last N days of event logs" }]
+        ]
+      ]
+    },
+    {
+      "type": "code",
+      "language": "shell",
+      "code": "$ moatlog clean"
+    },
+    {
+      "type": "callout",
+      "variant": "warning",
+      "title": "Interactive confirmation",
+      "text": "clean prompts for confirmation before deleting. With --all, warns that moat.json may be invalidated on the next distill."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "moatlog mcp"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "value": "Usage: " },
+        { "type": "inlineCode", "value": "moatlog mcp" }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Start the MCP server."
+    },
+    {
+      "type": "paragraph",
+      "text": "Runs the @moatlog/mcp server on stdio with the project root as cwd. Cursor and Claude Code invoke this via .cursor/mcp.json — you rarely run it manually."
+    },
+    {
+      "type": "code",
+      "language": "shell",
+      "code": "$ moatlog mcp"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Environment variables"
+    },
+    {
+      "type": "table",
+      "header": [
+        [{ "type": "text", "value": "Variable" }],
+        [{ "type": "text", "value": "Description" }]
+      ],
+      "rows": [
+        [
+          [{ "type": "inlineCode", "value": "ANTHROPIC_API_KEY" }],
+          [
+            {
+              "type": "text",
+              "value": "Used by moatlog merge for LLM conflict resolution when neither cursor nor claude CLI is detected on PATH."
+            }
+          ]
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Common workflows"
+    },
+    {
+      "type": "code",
+      "language": "shell",
+      "code": "# verify setup after moatlog init\nmoatlog doctor\n\n# check moat health before committing\nmoatlog check-moat\nmoatlog distill\n\n# after a git merge conflict on moat.json\nmoatlog merge --branch main\n\n# measure retrieval quality\nmoatlog eval --baseline\n\n# team member joining an existing repo with moat.json\nmoatlog init\nmoatlog distill\nmoatlog status"
+    }
+  ]
+}

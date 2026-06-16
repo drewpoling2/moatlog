@@ -1,0 +1,524 @@
+{
+  "title": "Hooks Reference",
+  "slug": "hooks",
+  "content": [
+    {
+      "type": "heading",
+      "level": 1,
+      "text": "Hooks Reference"
+    },
+    {
+      "type": "paragraph",
+      "text": "Hooks are shell scripts that fire during agent activity and write events to .moatlog/events-YYYY-MM-DD.jsonl. moatlog init wires them automatically — this page is for reference and customization."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How hooks are wired"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Cursor"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "value": "Config file: " },
+        { "type": "inlineCode", "value": ".cursor/hooks.json" },
+        { "type": "text", "value": ". Script location: " },
+        { "type": "inlineCode", "value": ".cursor/hooks/" },
+        { "type": "text", "value": " (" },
+        { "type": "inlineCode", "value": "moatlog-event.sh" },
+        { "type": "text", "value": ", " },
+        { "type": "inlineCode", "value": "moatlog-distill.sh" },
+        { "type": "text", "value": ")." }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Cursor hook events that trigger moatlog and the moatlog action they produce:"
+    },
+    {
+      "type": "table",
+      "header": [
+        [{ "type": "text", "value": "Cursor hook" }],
+        [{ "type": "text", "value": "Matcher" }],
+        [{ "type": "text", "value": "moatlog action" }]
+      ],
+      "rows": [
+        [
+          [{ "type": "inlineCode", "value": "beforeReadFile" }],
+          [{ "type": "text", "value": "—" }],
+          [{ "type": "inlineCode", "value": "read" }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "preToolUse" }],
+          [{ "type": "inlineCode", "value": "Read" }],
+          [{ "type": "inlineCode", "value": "read" }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "postToolUse" }],
+          [{ "type": "inlineCode", "value": "Read" }],
+          [{ "type": "inlineCode", "value": "read" }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "afterFileEdit" }],
+          [{ "type": "text", "value": "—" }],
+          [{ "type": "inlineCode", "value": "write" }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "beforeSubmitPrompt" }],
+          [{ "type": "text", "value": "—" }],
+          [{ "type": "inlineCode", "value": "prompt_start" }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "sessionStart" }],
+          [{ "type": "text", "value": "—" }],
+          [{ "type": "inlineCode", "value": "session_start" }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "sessionEnd" }],
+          [{ "type": "text", "value": "—" }],
+          [{ "type": "inlineCode", "value": "session_end" }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "afterShellExecution" }],
+          [{ "type": "text", "value": "—" }],
+          [{ "type": "inlineCode", "value": "shell" }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "stop" }],
+          [{ "type": "text", "value": "—" }],
+          [{ "type": "inlineCode", "value": "agent_stop" }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "stop" }],
+          [{ "type": "text", "value": "—" }],
+          [{ "type": "text", "value": "runs moatlog-distill.sh (moatlog distill)" }]
+        ]
+      ]
+    },
+    {
+      "type": "code",
+      "language": "json",
+      "code": "{\n  \"version\": 1,\n  \"hooks\": {\n    \"beforeReadFile\": [{ \"command\": \".cursor/hooks/moatlog-event.sh\" }],\n    \"preToolUse\": [{ \"command\": \".cursor/hooks/moatlog-event.sh\", \"matcher\": \"Read\" }],\n    \"postToolUse\": [{ \"command\": \".cursor/hooks/moatlog-event.sh\", \"matcher\": \"Read\" }],\n    \"afterFileEdit\": [{ \"command\": \".cursor/hooks/moatlog-event.sh\" }],\n    \"beforeSubmitPrompt\": [{ \"command\": \".cursor/hooks/moatlog-event.sh\" }],\n    \"sessionStart\": [{ \"command\": \".cursor/hooks/moatlog-event.sh\" }],\n    \"sessionEnd\": [{ \"command\": \".cursor/hooks/moatlog-event.sh\" }],\n    \"afterShellExecution\": [{ \"command\": \".cursor/hooks/moatlog-event.sh\" }],\n    \"stop\": [\n      { \"command\": \".cursor/hooks/moatlog-event.sh\" },\n      { \"command\": \".cursor/hooks/moatlog-distill.sh\" }\n    ]\n  }\n}"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Claude Code"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "value": "Config file: " },
+        { "type": "inlineCode", "value": ".claude/settings.json" },
+        { "type": "text", "value": " (" },
+        { "type": "inlineCode", "value": "hooks" },
+        { "type": "text", "value": " key). Script location: " },
+        { "type": "inlineCode", "value": ".claude/hooks/" },
+        { "type": "text", "value": " (" },
+        { "type": "inlineCode", "value": "moatlog-event-claude.sh" },
+        { "type": "text", "value": ", " },
+        { "type": "inlineCode", "value": "moatlog-distill-claude.sh" },
+        { "type": "text", "value": "). init adds " },
+        { "type": "inlineCode", "value": ".claude/hooks" },
+        { "type": "text", "value": " to .gitignore." }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Claude Code hook events that trigger moatlog:"
+    },
+    {
+      "type": "table",
+      "header": [
+        [{ "type": "text", "value": "Claude Code hook" }],
+        [{ "type": "text", "value": "Matcher" }],
+        [{ "type": "text", "value": "moatlog action" }]
+      ],
+      "rows": [
+        [
+          [{ "type": "inlineCode", "value": "PreToolUse" }],
+          [{ "type": "inlineCode", "value": "Read" }],
+          [{ "type": "inlineCode", "value": "read" }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "PreToolUse" }],
+          [{ "type": "inlineCode", "value": "Bash" }],
+          [{ "type": "inlineCode", "value": "shell" }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "PostToolUse" }],
+          [{ "type": "inlineCode", "value": "Write|Edit|MultiEdit" }],
+          [{ "type": "inlineCode", "value": "write" }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "UserPromptSubmit" }],
+          [{ "type": "text", "value": "—" }],
+          [{ "type": "inlineCode", "value": "prompt_start" }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "Stop" }],
+          [{ "type": "text", "value": "—" }],
+          [{ "type": "inlineCode", "value": "agent_stop" }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "Stop" }],
+          [{ "type": "text", "value": "—" }],
+          [{ "type": "text", "value": "runs moatlog-distill-claude.sh (agent_stop + moatlog distill)" }]
+        ]
+      ]
+    },
+    {
+      "type": "code",
+      "language": "json",
+      "code": "{\n  \"hooks\": {\n    \"PreToolUse\": [\n      {\n        \"matcher\": \"Read\",\n        \"hooks\": [\n          {\n            \"type\": \"command\",\n            \"command\": \"bash .claude/hooks/moatlog-event-claude.sh\",\n            \"timeout\": 10\n          }\n        ]\n      },\n      {\n        \"matcher\": \"Bash\",\n        \"hooks\": [\n          {\n            \"type\": \"command\",\n            \"command\": \"bash .claude/hooks/moatlog-event-claude.sh\",\n            \"timeout\": 10\n          }\n        ]\n      }\n    ],\n    \"PostToolUse\": [\n      {\n        \"matcher\": \"Write|Edit|MultiEdit\",\n        \"hooks\": [\n          {\n            \"type\": \"command\",\n            \"command\": \"bash .claude/hooks/moatlog-event-claude.sh\",\n            \"timeout\": 10\n          }\n        ]\n      }\n    ],\n    \"UserPromptSubmit\": [\n      {\n        \"hooks\": [\n          {\n            \"type\": \"command\",\n            \"command\": \"bash .claude/hooks/moatlog-event-claude.sh\",\n            \"timeout\": 10\n          }\n        ]\n      }\n    ],\n    \"Stop\": [\n      {\n        \"hooks\": [\n          {\n            \"type\": \"command\",\n            \"command\": \"bash .claude/hooks/moatlog-distill-claude.sh\",\n            \"timeout\": 60\n          }\n        ]\n      }\n    ]\n  }\n}"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Events JSONL schema"
+    },
+    {
+      "type": "paragraph",
+      "text": "Each line in .moatlog/events-YYYY-MM-DD.jsonl is one JSON object appended by the hook scripts (EventLogger.write uses JSON.stringify with no file-level _version field). The contract is the AgentEvent interface in packages/core/src/types.ts, plus readSource on Cursor read events."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "action (AgentAction)"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "inlineCode", "value": "read" },
+        { "type": "text", "value": ", " },
+        { "type": "inlineCode", "value": "write" },
+        { "type": "text", "value": ", " },
+        { "type": "inlineCode", "value": "create" },
+        { "type": "text", "value": ", " },
+        { "type": "inlineCode", "value": "delete" },
+        { "type": "text", "value": ", " },
+        { "type": "inlineCode", "value": "rename" },
+        { "type": "text", "value": ", " },
+        { "type": "inlineCode", "value": "prompt_start" },
+        { "type": "text", "value": ", " },
+        { "type": "inlineCode", "value": "agent_stop" },
+        { "type": "text", "value": ", " },
+        { "type": "inlineCode", "value": "session_end" },
+        { "type": "text", "value": ", " },
+        { "type": "inlineCode", "value": "event_log_boundary" },
+        { "type": "text", "value": " (synthetic — inserted between JSONL files during distill), " },
+        { "type": "inlineCode", "value": "shell" },
+        { "type": "text", "value": ". Hooks also emit " },
+        { "type": "inlineCode", "value": "session_start" },
+        { "type": "text", "value": " (Cursor sessionStart), which is not yet in the AgentAction union." }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "agent (AgentName)"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "inlineCode", "value": "cursor" },
+        { "type": "text", "value": ", " },
+        { "type": "inlineCode", "value": "claude-code" },
+        { "type": "text", "value": ", " },
+        { "type": "inlineCode", "value": "copilot" },
+        { "type": "text", "value": ". Hook scripts set " },
+        { "type": "inlineCode", "value": "cursor" },
+        { "type": "text", "value": " or " },
+        { "type": "inlineCode", "value": "claude-code" },
+        { "type": "text", "value": "." }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Field reference"
+    },
+    {
+      "type": "table",
+      "header": [
+        [{ "type": "text", "value": "Field" }],
+        [{ "type": "text", "value": "Type" }],
+        [{ "type": "text", "value": "Description" }],
+        [{ "type": "text", "value": "Example" }]
+      ],
+      "rows": [
+        [
+          [{ "type": "inlineCode", "value": "id" }],
+          [{ "type": "text", "value": "string" }],
+          [{ "type": "text", "value": "UUID per event" }],
+          [{ "type": "inlineCode", "value": "9653487f-7976-4cd4-b0c7-c4b6c118e819" }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "timestamp" }],
+          [{ "type": "text", "value": "string" }],
+          [{ "type": "text", "value": "ISO 8601 UTC" }],
+          [{ "type": "inlineCode", "value": "2026-06-12T18:46:59.000Z" }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "sessionId" }],
+          [{ "type": "text", "value": "string" }],
+          [{ "type": "text", "value": "Agent session identifier" }],
+          [{ "type": "inlineCode", "value": "7fed1384-1f3d-42cc-8714-94afe85f2dc2" }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "agent" }],
+          [{ "type": "text", "value": "AgentName" }],
+          [{ "type": "text", "value": "Which agent produced the event" }],
+          [{ "type": "inlineCode", "value": "cursor" }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "action" }],
+          [{ "type": "text", "value": "AgentAction" }],
+          [{ "type": "text", "value": "Event kind (see action list above)" }],
+          [{ "type": "inlineCode", "value": "read" }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "projectName" }],
+          [{ "type": "text", "value": "string" }],
+          [{ "type": "text", "value": "Project directory name" }],
+          [{ "type": "inlineCode", "value": "moatlog" }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "path" }],
+          [{ "type": "text", "value": "string?" }],
+          [{ "type": "text", "value": "Absolute file path (read / write)" }],
+          [{ "type": "inlineCode", "value": "/…/docs/styles/tokens.css" }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "relativePath" }],
+          [{ "type": "text", "value": "string?" }],
+          [{ "type": "text", "value": "Project-relative path (read / write)" }],
+          [{ "type": "inlineCode", "value": "docs/styles/tokens.css" }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "extension" }],
+          [{ "type": "text", "value": "string?" }],
+          [{ "type": "text", "value": "File extension (read / write)" }],
+          [{ "type": "inlineCode", "value": ".css" }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "directory" }],
+          [{ "type": "text", "value": "string?" }],
+          [{ "type": "text", "value": "Parent directory relative to project root (read / write)" }],
+          [{ "type": "inlineCode", "value": "docs/styles" }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "generationId" }],
+          [{ "type": "text", "value": "string?" }],
+          [{ "type": "text", "value": "Cursor generation_id or Claude Code tool_use_id when available" }],
+          [{ "type": "inlineCode", "value": "385340ec-a93b-4138-a88c-70e1b2523b73" }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "task" }],
+          [{ "type": "text", "value": "string?" }],
+          [{ "type": "text", "value": "Raw prompt text (prompt_start only)" }],
+          [{ "type": "inlineCode", "value": "can we make this background…" }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "command" }],
+          [{ "type": "text", "value": "string?" }],
+          [{ "type": "text", "value": "Shell command text (shell only)" }],
+          [{ "type": "inlineCode", "value": "yarn test" }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "duration_ms" }],
+          [{ "type": "text", "value": "number?" }],
+          [{ "type": "text", "value": "Session duration (session_end only)" }],
+          [{ "type": "inlineCode", "value": "0" }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "reason" }],
+          [{ "type": "text", "value": "string?" }],
+          [{ "type": "text", "value": "Session end reason (session_end only)" }],
+          [{ "type": "inlineCode", "value": "user_close" }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "previousPath" }],
+          [{ "type": "text", "value": "string?" }],
+          [{ "type": "text", "value": "Prior path (rename only — not emitted by current hooks)" }],
+          [{ "type": "text", "value": "—" }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "readSource" }],
+          [{ "type": "text", "value": "string?" }],
+          [{ "type": "text", "value": "Which Cursor hook captured the read: beforeReadFile, preToolUse, or postToolUse" }],
+          [{ "type": "inlineCode", "value": "postToolUse" }]
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Examples from event logs"
+    },
+    {
+      "type": "paragraph",
+      "text": "Real lines from .moatlog/events-*.jsonl in the moatlog repo. create, delete, rename, and event_log_boundary do not appear in on-disk event logs — create/delete/rename are reserved in AgentAction; event_log_boundary is inserted in memory when distill reads multiple daily files."
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "strong", "content": [{ "type": "text", "value": "read" }] }
+      ]
+    },
+    {
+      "type": "code",
+      "language": "json",
+      "code": "{\"id\":\"f6b1ff2a-3cb9-457f-b5b0-4664e354c634\",\"timestamp\":\"2026-06-12T19:14:35.000Z\",\"sessionId\":\"verify-read-session\",\"agent\":\"cursor\",\"action\":\"read\",\"path\":\"/Users/bap5806/Documents/side-projects/moatlog/packages/cli/src/commands/status.ts\",\"relativePath\":\"packages/cli/src/commands/status.ts\",\"extension\":\".ts\",\"directory\":\"packages/cli/src/commands\",\"projectName\":\"moatlog\",\"readSource\":\"postToolUse\"}"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "strong", "content": [{ "type": "text", "value": "write" }] }
+      ]
+    },
+    {
+      "type": "code",
+      "language": "json",
+      "code": "{\"id\":\"cce63e77-f12c-4c38-9d61-50d574e06e6f\",\"timestamp\":\"2026-06-11T05:26:41.000Z\",\"sessionId\":\"8a88eb30-578a-4220-8789-0508c6d70653\",\"agent\":\"cursor\",\"action\":\"write\",\"path\":\"/Users/bap5806/Documents/side-projects/moatlog/docs/lib/docs.ts\",\"relativePath\":\"docs/lib/docs.ts\",\"extension\":\".ts\",\"directory\":\"docs/lib\",\"projectName\":\"moatlog\"}"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "strong", "content": [{ "type": "text", "value": "prompt_start" }] }
+      ]
+    },
+    {
+      "type": "code",
+      "language": "json",
+      "code": "{\"id\":\"10c92fde-ebf5-4733-81da-fdf59c1d908f\",\"timestamp\":\"2026-06-14T00:15:05.000Z\",\"sessionId\":\"7fed1384-1f3d-42cc-8714-94afe85f2dc2\",\"generationId\":\"385340ec-a93b-4138-a88c-70e1b2523b73\",\"agent\":\"cursor\",\"action\":\"prompt_start\",\"task\":\"can we make this background for the light modeF1F1ED\",\"projectName\":\"moatlog\"}"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "strong", "content": [{ "type": "text", "value": "agent_stop" }] }
+      ]
+    },
+    {
+      "type": "code",
+      "language": "json",
+      "code": "{\"id\":\"6b76f289-0501-4273-bcc3-1f7824f26ba2\",\"timestamp\":\"2026-06-14T04:32:31.000Z\",\"sessionId\":\"7fed1384-1f3d-42cc-8714-94afe85f2dc2\",\"generationId\":\"7f0fc178-492a-45d1-89e0-7692e8ad0f6e\",\"agent\":\"cursor\",\"action\":\"agent_stop\",\"projectName\":\"moatlog\"}"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "strong", "content": [{ "type": "text", "value": "shell" }] }
+      ]
+    },
+    {
+      "type": "code",
+      "language": "json",
+      "code": "{\"id\":\"870dfb1f-b7ba-4585-80f4-b461a84440f2\",\"timestamp\":\"2026-06-11T22:15:10.000Z\",\"sessionId\":\"8a88eb30-578a-4220-8789-0508c6d70653\",\"agent\":\"cursor\",\"action\":\"shell\",\"command\":\"TMP=$(mktemp -d) && cd \\\"$TMP\\\" && node /Users/bap5806/Documents/side-projects/moatlog/packages/cli/dist/bin.js init && echo \\\"---\\\" && ls -la .cursor/hooks/ .cursor/rules/ && cat .cursor/mcp.json && grep \\\"PROJECT_NAME=\\\" .cursor/hooks/moatlog-event.sh | head -1 && test -x .cursor/hooks/moatlog-event.sh && echo \\\"executable ok\\\" && rm -rf \\\"$TMP\\\"\",\"projectName\":\"moatlog\"}"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "strong", "content": [{ "type": "text", "value": "session_start" }] }
+      ]
+    },
+    {
+      "type": "code",
+      "language": "json",
+      "code": "{\"id\":\"901e1713-c464-4beb-bd5b-de1adc48653f\",\"timestamp\":\"2026-06-12T18:54:31.000Z\",\"sessionId\":\"7fed1384-1f3d-42cc-8714-94afe85f2dc2\",\"agent\":\"cursor\",\"action\":\"session_start\",\"projectName\":\"moatlog\"}"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "strong", "content": [{ "type": "text", "value": "session_end" }] }
+      ]
+    },
+    {
+      "type": "code",
+      "language": "json",
+      "code": "{\"id\":\"de1f6026-efd1-47fa-b117-31c928b8b3ea\",\"timestamp\":\"2026-06-11T22:22:44.000Z\",\"sessionId\":\"8a88eb30-578a-4220-8789-0508c6d70653\",\"agent\":\"cursor\",\"action\":\"session_end\",\"duration_ms\":0,\"reason\":\"user_close\",\"projectName\":\"moatlog\"}"
+    },
+    {
+      "type": "callout",
+      "variant": "info",
+      "title": "Events are the source of truth",
+      "text": "The events JSONL format is versioned by the AgentEvent contract in types.ts. moat.json is fully re-derivable from events by running moatlog distill — events are the source of truth."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": ".moatlogignore"
+    },
+    {
+      "type": "paragraph",
+      "text": ".moatlogignore uses .gitignore syntax. Files matching patterns are excluded at the hook layer (never written to JSONL) and at the distill layer. moatlog init writes .moatlogignore automatically."
+    },
+    {
+      "type": "paragraph",
+      "text": "Default patterns (from DEFAULT_MOATLOGIGNORE_PATTERNS in packages/core/src/moatlogignore.ts, plus .moatlog/ added by init):"
+    },
+    {
+      "type": "code",
+      "language": "text",
+      "code": ".env*\n*.pem\n*.key\nid_rsa*\n*credentials*\n.npmrc\n.moatlog/"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Verifying hooks are active"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "content": [
+        {
+          "type": "listItem",
+          "content": [
+            { "type": "text", "value": "Run " },
+            { "type": "inlineCode", "value": "moatlog status" },
+            { "type": "text", "value": " — should show ● hooks active (.cursor/hooks.json)" }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            { "type": "text", "value": "Run " },
+            { "type": "inlineCode", "value": "moatlog doctor" },
+            { "type": "text", "value": " for a full health check (hooks, read capture, MCP, moat.json, permissions)" }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            { "type": "text", "value": "Check " },
+            { "type": "inlineCode", "value": ".moatlog/events-YYYY-MM-DD.jsonl" },
+            { "type": "text", "value": " directly — events should appear within seconds of agent activity" }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            { "type": "text", "value": "If hooks aren't firing, see " },
+            {
+              "type": "link",
+              "url": "/docs/mcp",
+              "content": [{ "type": "text", "value": "MCP Setup → Troubleshooting" }]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Customizing hooks"
+    },
+    {
+      "type": "paragraph",
+      "text": "Advanced users can edit the hook scripts in .cursor/hooks/ or .claude/hooks/ directly. moatlog init --force will overwrite customizations to those scaffolded files. If you need custom logic, keep it in a separate script and call it from the moatlog hook script."
+    }
+  ]
+}

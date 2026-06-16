@@ -1,0 +1,490 @@
+{
+  "title": "Merge",
+  "slug": "merge",
+  "content": [
+    {
+      "type": "heading",
+      "level": 1,
+      "text": "Merge"
+    },
+    {
+      "type": "paragraph",
+      "text": "How moatlog reconciles moat.json when multiple developers distill independently, and how to use the merge command in your workflow."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why merge exists"
+    },
+    {
+      "type": "paragraph",
+      "text": "When you run moatlog distill, it compresses all event logs into moat.json — a single file that summarizes file access patterns, prompt windows, and activity across your project. In a team, this creates a problem:"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "content": [
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "text",
+              "value": "Developer A distills their local events into moat.json and commits."
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "text",
+              "value": "Developer B distills their local events independently, creating a different moat.json with their own event history."
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "text",
+              "value": "When B's PR merges, A's distill is outdated. B's version doesn't include A's file access patterns."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "This means the moat's shared context is incomplete — neither developer's memory includes the other's exploration. Merge solves this by combining both distills into one unified moat.json that contains the collaborative knowledge of both teams."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How three-way delta merge works"
+    },
+    {
+      "type": "paragraph",
+      "text": "Moatlog uses a three-way merge strategy (like git) to combine moat.json files. It needs three inputs:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "content": [
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "strong",
+              "content": [{ "type": "text", "value": "Base" }]
+            },
+            {
+              "type": "text",
+              "value": " — the common ancestor moat.json (from the merge-base of your branches)"
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "strong",
+              "content": [{ "type": "text", "value": "Ours" }]
+            },
+            {
+              "type": "text",
+              "value": " — the current branch's moat.json (your local distill)"
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "strong",
+              "content": [{ "type": "text", "value": "Theirs" }]
+            },
+            {
+              "type": "text",
+              "value": " — the branch being merged in (the PR's moat.json)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Merge combines these intelligently:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "content": [
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "strong",
+              "content": [{ "type": "text", "value": "Counts sum" }]
+            },
+            {
+              "type": "text",
+              "value": " — For numeric fields (writeCount, totalEvents, etc.), merge uses delta math: "
+            },
+            { "type": "inlineCode", "value": "base + (ours - base) + (theirs - base)" },
+            {
+              "type": "text",
+              "value": ". This avoids double-counting and handles resets correctly (if you reindex files locally, the count drops, but merge detects this as a reset rather than data loss)."
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "strong",
+              "content": [{ "type": "text", "value": "Arrays union" }]
+            },
+            {
+              "type": "text",
+              "value": " — For sessions, prompt windows, and agent names, merge takes the union (keeps entries from both sides). Duplicates by ID are resolved by keeping yours and using the higher quality rating."
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "strong",
+              "content": [{ "type": "text", "value": "Base version handles resets" }]
+            },
+            {
+              "type": "text",
+              "value": " — The base moat.json is critical: it lets merge distinguish between a regression (count dropped, might be wrong) and a reset (you re-ran distill with filtered logs). If count drops below 50% of base, merge flags it as COUNT_REGRESSION."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Conflict detection and resolution cascade"
+    },
+    {
+      "type": "paragraph",
+      "text": "Most merges succeed without conflicts. But when the delta math can't resolve a situation cleanly, moatlog flags it as a conflict and hands it to an LLM for resolution."
+    },
+    {
+      "type": "paragraph",
+      "text": "Conflict types:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "content": [
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "strong",
+              "content": [{ "type": "text", "value": "POSSIBLE_RENAME" }]
+            },
+            {
+              "type": "text",
+              "value": " — A file exists in ours but not theirs (or vice versa), but they have the same co-access partners (files accessed together). Did one side rename src/foo.ts to src/bar.ts?"
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "strong",
+              "content": [{ "type": "text", "value": "POSSIBLE_DELETION" }]
+            },
+            {
+              "type": "text",
+              "value": " — A file appears in base and theirs but not ours (or vice versa), and has low activity. Was it deleted or just not touched?"
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "strong",
+              "content": [{ "type": "text", "value": "COUNT_REGRESSION" }]
+            },
+            {
+              "type": "text",
+              "value": " — A file's count dropped below 50% of the base value. Merge flags this for manual review (you may have reindexed or filtered logs)."
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "strong",
+              "content": [{ "type": "text", "value": "QUALITY_CONFLICT" }]
+            },
+            {
+              "type": "text",
+              "value": " — A prompt window exists in both versions but with different quality ratings (high vs low). Auto-resolved by taking the higher quality."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "When conflicts are detected and --no-llm is not set, merge attempts automatic resolution in this order:"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "content": [
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "strong",
+              "content": [{ "type": "text", "value": "cursor" }]
+            },
+            {
+              "type": "text",
+              "value": " — If the cursor CLI is on your PATH, asks cursor to resolve conflicts."
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "strong",
+              "content": [{ "type": "text", "value": "claude" }]
+            },
+            {
+              "type": "text",
+              "value": " — Falls back to claude CLI if available."
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "strong",
+              "content": [{ "type": "text", "value": "ANTHROPIC_API_KEY" }]
+            },
+            {
+              "type": "text",
+              "value": " — If neither CLI is available but ANTHROPIC_API_KEY is set, uses the Anthropic API directly."
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "strong",
+              "content": [{ "type": "text", "value": "Manual fallback" }]
+            },
+            {
+              "type": "text",
+              "value": " — If no agent is detected, prints conflicts to stdout and exits with an error. You must resolve manually and re-distill."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "value": "The LLM sees conflict details (type, evidence, file profiles) and returns resolution decisions: " },
+        { "type": "inlineCode", "value": "keep_ours" },
+        { "type": "text", "value": ", " },
+        { "type": "inlineCode", "value": "keep_theirs" },
+        { "type": "text", "value": ", " },
+        { "type": "inlineCode", "value": "use_merged" },
+        { "type": "text", "value": ", " },
+        { "type": "inlineCode", "value": "drop_theirs_path" },
+        { "type": "text", "value": ", or " },
+        { "type": "inlineCode", "value": "rename_theirs_to_ours" },
+        { "type": "text", "value": "." }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Git merge driver"
+    },
+    {
+      "type": "paragraph",
+      "text": "Moatlog automatically registers a git merge driver when you run moatlog init. This makes moat.json merge conflict-free in git itself."
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "value": "When you " },
+        { "type": "inlineCode", "value": "git merge" },
+        { "type": "text", "value": ", git checks .gitattributes and sees that " },
+        { "type": "inlineCode", "value": ".moatlog/moat.json" },
+        { "type": "text", "value": " uses the driver " },
+        { "type": "inlineCode", "value": "merge=moatlog-union" },
+        { "type": "text", "value": ". Instead of git's text-based merge (which would produce a conflicted file), it runs:" }
+      ]
+    },
+    {
+      "type": "code",
+      "language": "shell",
+      "code": "moatlog merge-driver <ancestor> <current> <other> <output>"
+    },
+    {
+      "type": "paragraph",
+      "text": "This handler performs a three-way delta merge and writes the resolved moat.json to the output path. Git treats it as a successful merge (no conflict markers)."
+    },
+    {
+      "type": "callout",
+      "variant": "info",
+      "title": "Two-way fallback",
+      "text": "If merge-base can't be determined, moatlog falls back to two-way merge (ours as base). You'll see a message 'no common ancestor moat.json — using two-way merge'."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Common workflows"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Merge before committing"
+    },
+    {
+      "type": "paragraph",
+      "text": "Before you distill and commit moat.json, merge in any upstream changes:"
+    },
+    {
+      "type": "code",
+      "language": "shell",
+      "code": "# Pull latest from main\ngit fetch origin\n\n# Merge main's moat.json into yours\nmoatlog merge --branch origin/main\n\n# Now distill and commit\nmoatlog distill\ngit add .moatlog/moat.json\ngit commit -m \"Distill: merge with main and add new sessions\""
+    },
+    {
+      "type": "paragraph",
+      "text": "This ensures your commits include knowledge from all teams."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "After a git merge conflict on moat.json"
+    },
+    {
+      "type": "paragraph",
+      "text": "If moat.json still shows a conflict (rare, since the merge driver handles it), resolve it with moatlog:"
+    },
+    {
+      "type": "code",
+      "language": "shell",
+      "code": "# Resolve via delta merge\nmoatlog merge\n\n# Mark as resolved\ngit add .moatlog/moat.json\ngit commit --no-edit"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Dry-run to preview changes"
+    },
+    {
+      "type": "paragraph",
+      "text": "Before actually merging, see what would change:"
+    },
+    {
+      "type": "code",
+      "language": "shell",
+      "code": "moatlog merge --dry-run\n\n# Shows summary of changes without writing moat.json\n# merged: N new files from theirs, N files with summed counts, N new prompt windows"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Deterministic merge (no LLM)"
+    },
+    {
+      "type": "paragraph",
+      "text": "In CI or when you want just the delta math, use --no-llm to skip LLM resolution:"
+    },
+    {
+      "type": "code",
+      "language": "shell",
+      "code": "moatlog merge --no-llm\n\n# If conflicts exist, prints them and exits with code 1\n# No LLM calls, fully deterministic"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Flags"
+    },
+    {
+      "type": "table",
+      "header": [
+        [{ "type": "text", "value": "Flag" }],
+        [{ "type": "text", "value": "Type" }],
+        [{ "type": "text", "value": "Default" }],
+        [{ "type": "text", "value": "Description" }]
+      ],
+      "rows": [
+        [
+          [{ "type": "inlineCode", "value": "--branch" }],
+          [{ "type": "text", "value": "string" }],
+          [{ "type": "text", "value": "main" }],
+          [{ "type": "text", "value": "Branch (or ref) to merge from. Can be a local branch, origin/branch, or commit hash." }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "--dry-run" }],
+          [{ "type": "text", "value": "boolean" }],
+          [{ "type": "text", "value": "false" }],
+          [{ "type": "text", "value": "Show what would change without writing moat.json. Useful for previewing before committing." }]
+        ],
+        [
+          [{ "type": "inlineCode", "value": "--no-llm" }],
+          [{ "type": "text", "value": "boolean" }],
+          [{ "type": "text", "value": "false" }],
+          [{ "type": "text", "value": "Deterministic merge only (delta math). Surface conflicts as text and exit with code 1 if any remain. Skips all LLM calls." }]
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Exit codes"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "content": [
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "strong",
+              "content": [{ "type": "text", "value": "0" }]
+            },
+            {
+              "type": "text",
+              "value": " — Merge succeeded (with or without LLM resolution). moat.json written."
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "strong",
+              "content": [{ "type": "text", "value": "1" }]
+            },
+            {
+              "type": "text",
+              "value": " — Conflicts remain (--no-llm was set, or LLM resolution failed). moat.json not written."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

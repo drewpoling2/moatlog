@@ -1,0 +1,175 @@
+{
+  "title": "Getting Started",
+  "slug": "getting-started",
+  "content": [
+    {
+      "type": "heading",
+      "level": 1,
+      "text": "Getting Started"
+    },
+    {
+      "type": "paragraph",
+      "text": "Moatlog runs inside your project. Install the CLI, run one init command, restart Cursor, and your agent starts building behavioral memory automatically."
+    },
+    {
+      "type": "step",
+      "number": 1,
+      "title": "Install",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Install the Moatlog CLI globally, or run commands with npx without installing."
+        },
+        {
+          "type": "command",
+          "command": "npm install -g @moatlog/cli",
+          "description": "Install the moatlog CLI globally"
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            { "type": "text", "value": "No install needed: " },
+            { "type": "inlineCode", "value": "npx @moatlog/cli init" },
+            { "type": "text", "value": " works from any project directory." }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "step",
+      "number": 2,
+      "title": "Init",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "From your project root, run init. This scaffolds everything Moatlog needs in one step — no manual hook scripts, MCP config, or cursor rules."
+        },
+        {
+          "type": "command",
+          "command": "moatlog init",
+          "description": "Scaffold hooks, MCP config, rules, and .moatlog/"
+        },
+        {
+          "type": "paragraph",
+          "text": "init creates:"
+        },
+        {
+          "type": "list",
+          "ordered": false,
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                { "type": "inlineCode", "value": ".cursor/hooks.json" },
+                {
+                  "type": "text",
+                  "value": " and hook scripts — capture reads, edits, prompts, and shell commands"
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                { "type": "inlineCode", "value": ".cursor/mcp.json" },
+                {
+                  "type": "text",
+                  "value": " — wires the Moatlog MCP server into Cursor"
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                { "type": "inlineCode", "value": ".cursor/rules/moatlog.mdc" },
+                {
+                  "type": "text",
+                  "value": " — tells agents to call get_task_context at session start"
+                }
+              ]
+            },
+            {
+              "type": "listItem",
+              "content": [
+                { "type": "inlineCode", "value": ".moatlog/" },
+                {
+                  "type": "text",
+                  "value": " — event log directory (added to .gitignore)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            { "type": "text", "value": "Existing files are skipped. Pass " },
+            { "type": "inlineCode", "value": "--force" },
+            { "type": "text", "value": " to overwrite." }
+          ]
+        },
+        {
+          "type": "callout",
+          "variant": "info",
+          "title": "Claude Code",
+          "text": "For Claude Code, pass --agent claude-code or --agent all: moatlog init --agent all. Then restart Claude Code so hooks and MCP reload."
+        }
+      ]
+    },
+    {
+      "type": "step",
+      "number": 3,
+      "title": "Restart Cursor",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Restart Cursor so hooks and MCP reload. Without a restart, the agent won't capture events or connect to get_task_context."
+        },
+        {
+          "type": "callout",
+          "variant": "info",
+          "title": "jq is required for hooks",
+          "text": "Hook scripts use jq to parse Cursor hook payloads. Install jq if init warns it is missing on your PATH."
+        }
+      ]
+    },
+    {
+      "type": "step",
+      "number": 4,
+      "title": "Verify",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Confirm hooks are active and check moat strength."
+        },
+        {
+          "type": "command",
+          "command": "moatlog status",
+          "description": "Show hooks status and moat strength"
+        },
+        {
+          "type": "paragraph",
+          "text": "You should see ● hooks active (.cursor/hooks.json). Work in Agent mode for a few minutes, then check again — depth and coverage grow as events accumulate."
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            { "type": "text", "value": "The stop hook runs " },
+            { "type": "inlineCode", "value": "moatlog distill" },
+            {
+              "type": "text",
+              "value": " automatically. Run it manually anytime, or validate freshness with "
+            },
+            { "type": "inlineCode", "value": "moatlog check-moat" },
+            { "type": "text", "value": " before committing moat.json." }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "variant": "success",
+      "title": "Your moat is now building automatically with every Cursor session",
+      "text": "Each prompt, file read, and edit deepens behavioral memory. Distill on stop keeps moat.json current for MCP and your team."
+    }
+  ]
+}

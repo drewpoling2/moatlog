@@ -1,0 +1,58 @@
+/* ── moatlog · card ── */
+
+.doc-card-grid {
+  display: grid;
+  gap: var(--space-4);
+  margin: var(--space-8) 0 var(--space-4);
+}
+
+.doc-card-grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.doc-card-grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.doc-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-5);
+  border: var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-elevated);
+  transition:
+    border-color var(--transition-color),
+    background var(--transition-color);
+}
+
+.doc-card:hover {
+  border-color: var(--color-accent);
+  background: var(--color-accent-dim);
+}
+
+.doc-card-title {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  color: var(--color-fg);
+}
+
+.doc-card-description {
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--color-fg-subtle);
+}
+
+.doc-card-icon {
+  font-size: var(--font-size-lg);
+  line-height: var(--leading-none);
+}
+
+@media (max-width: 720px) {
+  .doc-card-grid-cols-2,
+  .doc-card-grid-cols-3 {
+    grid-template-columns: 1fr;
+  }
+}

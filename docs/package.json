@@ -1,0 +1,26 @@
+{
+  "name": "moatlog-docs-poc",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "dev": "next dev",
+    "prebuild": "tsx scripts/generate-llms-txt.ts",
+    "build": "next build",
+    "start": "next start",
+    "generate:llms-txt": "tsx scripts/generate-llms-txt.ts"
+  },
+  "dependencies": {
+    "lucide-react": "0.383.0",
+    "next": "^16.2.9",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.42",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "tsx": "^4.22.4",
+    "typescript": "^5.8.3"
+  }
+}

@@ -1,0 +1,22 @@
+# moatlog
+
+> Behavioral memory for your AI
+
+## Overview
+
+- [Overview](http://localhost:3000/docs/overview): When your team commits code, git captures the change. When your agent explores your codebase to make that change — the files it read, the paths it explored,…
+
+## Guides
+
+- [Getting Started](http://localhost:3000/docs/getting-started): Moatlog runs inside your project. Install the CLI, run one init command, restart Cursor, and your agent starts building behavioral memory automatically.
+- [Hooks Reference](http://localhost:3000/docs/hooks): Hooks are shell scripts that fire during agent activity and write events to .moatlog/events-YYYY-MM-DD.jsonl. moatlog init wires them automatically — this…
+
+## Reference
+
+- [MCP Setup](http://localhost:3000/docs/mcp): The Moatlog MCP server exposes behavioral memory as tools your agent can call. It reads moat.json from .moatlog/ and returns hot files, file histories,…
+- [moat.json Reference](http://localhost:3000/docs/moat-json): moat.json is the distilled behavioral memory for your project — an open, standardized JSON file that captures what agents actually do. moatlog distill…
+- [CLI Reference](http://localhost:3000/docs/cli): Complete reference for all Moatlog CLI commands.
+
+## Documentation
+
+- [Merge](http://localhost:3000/docs/merge): How moatlog reconciles moat.json when multiple developers distill independently, and how to use the merge command in your workflow.

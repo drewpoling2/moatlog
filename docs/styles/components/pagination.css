@@ -1,0 +1,58 @@
+/* ── moatlog · pagination ── */
+
+.doc-pagination {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+  margin-top: var(--space-16);
+  padding-top: var(--space-8);
+  border-top: var(--border-subtle);
+}
+
+.doc-pagination-link {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-4);
+  border: var(--border-subtle);
+  border-radius: var(--radius-md);
+  transition:
+    border-color var(--transition-color),
+    background var(--transition-color);
+}
+
+.doc-pagination-link:hover {
+  border-color: var(--color-accent);
+  background: var(--color-accent-dim);
+}
+
+.doc-pagination-prev {
+  text-align: left;
+}
+
+.doc-pagination-next {
+  text-align: right;
+}
+
+.doc-pagination-label {
+  font-size: var(--font-size-sm);
+  color: var(--text-dim);
+  font-family: var(--font-body);
+}
+
+.doc-pagination-title {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  color: var(--color-fg);
+}
+
+@media (max-width: 720px) {
+  .doc-pagination {
+    grid-template-columns: 1fr;
+  }
+
+  .doc-pagination-next {
+    text-align: left;
+  }
+}

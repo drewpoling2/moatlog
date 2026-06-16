@@ -1,0 +1,130 @@
+/* ── moatlog · buttons ── */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  margin: 0;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-none);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    color var(--transition-color),
+    border-color var(--transition-color),
+    background var(--transition-color),
+    opacity var(--transition-color);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn--sm {
+  min-height: 2rem;
+  padding: 0 var(--space-4);
+  font-size: var(--text-xs);
+}
+
+.btn--md {
+  padding: var(--space-2) var(--space-5);
+}
+
+.btn--outline {
+  border-color: var(--color-nav-btn-border);
+  background: var(--color-nav-btn-bg);
+  color: var(--color-nav-btn-text);
+}
+
+.btn--outline:hover {
+  border-color: var(--color-border-strong);
+}
+
+.btn--ghost {
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-device-chrome-text);
+}
+
+.btn--ghost:hover {
+  color: var(--color-fg);
+}
+
+.btn--mono {
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-medium);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  color: var(--color-device-chrome-text);
+}
+
+.btn--mono:hover {
+  color: var(--color-fg);
+}
+
+.btn--on-accent {
+  padding-left: var(--space-4);
+  border-left: 1px solid rgb(15 56 15 / 0.2);
+  font-weight: var(--weight-bold);
+  opacity: 0.85;
+}
+
+.btn--on-accent:hover {
+  opacity: 1;
+  color: inherit;
+}
+
+.btn--lowercase {
+  text-transform: lowercase;
+}
+
+.theme-toggle {
+  background: var(--color-bg-elevated);
+  display: inline-flex;
+  padding: 2px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+}
+
+.theme-toggle-option {
+  margin: 0;
+  padding: var(--space-1) var(--space-3);
+  border: none;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-none);
+  text-transform: capitalize;
+  color: var(--color-fg-muted);
+  cursor: pointer;
+  transition:
+    color var(--transition-color),
+    background var(--transition-color);
+}
+
+.theme-toggle-option:hover {
+  color: var(--color-fg);
+}
+
+.theme-toggle-option--active {
+  background: var(--color-fg);
+  color: var(--color-fg-inverted);
+}
+
+.theme-toggle-option--active:hover {
+  color: var(--color-fg-inverted);
+}

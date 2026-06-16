@@ -1,0 +1,49 @@
+/* ── moatlog · tabs ── */
+
+.doc-tabs {
+  margin: var(--space-4) 0;
+  border: var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--surface-raised);
+}
+
+.doc-tabs-list {
+  display: flex;
+  gap: var(--space-1);
+  padding: var(--space-2);
+  border-bottom: var(--border-subtle);
+  background: var(--color-bg);
+}
+
+.doc-tab {
+  padding: var(--space-2) var(--space-4);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: var(--font-size-sm);
+  font-family: inherit;
+  cursor: pointer;
+  transition:
+    color var(--transition-color),
+    background var(--transition-color);
+}
+
+.doc-tab:hover {
+  color: var(--text);
+  background: var(--surface-raised);
+}
+
+.doc-tab-active {
+  color: var(--text);
+  background: var(--color-bg-subtle);
+}
+
+.doc-tab-panel {
+  padding: var(--space-4) var(--space-5);
+}
+
+.doc-tab-panel > .doc-paragraph:first-child {
+  margin-top: 0;
+}

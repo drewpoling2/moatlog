@@ -1,0 +1,222 @@
+/* ── moatlog · docs code blocks (docs pages only) ── */
+/* V2 contrast pass — hardware-era GB/DMG palette, bg #111 / #F0F0E8 */
+
+.docs-app {
+  --docs-code-bg: #111111;
+  --docs-code-header-bg: #111111;
+  --docs-code-header-text: #666666;
+  --docs-code-border: var(--color-border-subtle);
+  --docs-code-base: #a6a69f;
+  --docs-syn-string: #9bbc0f;
+  --docs-syn-key: #c8a8d8;
+  --docs-syn-variable: #9bbc0f;
+  --docs-syn-comment: #6a8848;
+  --docs-syn-keyword: #c8a8d8;
+  --docs-syn-function: #88b4d8;
+  --docs-syn-number: #d4a840;
+  --docs-syn-type: #d88870;
+  --docs-syn-operator: #a6a69f;
+  --docs-syn-punctuation: #a6a69f;
+  --docs-syn-shell-label: #6a8848;
+  --docs-syn-shell-value: #9bbc0f;
+  --docs-syn-shell-bullet: #9bbc0f;
+  --docs-cmd-bg: var(--color-accent-dim);
+  --docs-cmd-text: #0f380f;
+  --docs-cmd-copy-bg: #8bac0f;
+  --docs-cmd-copy-border: rgb(15 56 15 / 0.22);
+  --docs-inline-bg: #222;
+  --docs-inline-text: #9bbc0f;
+  --docs-inline-border: var(--color-border-subtle);
+}
+
+[data-theme='light'] .docs-app {
+  --docs-code-bg: #f3f3ed;
+  --docs-code-header-bg: #e8e7d9;
+  --docs-code-header-text: #888888;
+  --docs-code-border: var(--color-border-subtle);
+  --docs-code-base: #1a1a14;
+  --docs-syn-string: #4a7010;
+  --docs-syn-key: #6a3880;
+  --docs-syn-variable: #4a7010;
+  --docs-syn-comment: #5a7040;
+  --docs-syn-keyword: #6a3880;
+  --docs-syn-function: #2a5080;
+  --docs-syn-number: #8a6010;
+  --docs-syn-type: #a04030;
+  --docs-syn-operator: #787870;
+  --docs-syn-punctuation: #787870;
+  --docs-syn-shell-label: #4a7010;
+  --docs-syn-shell-value: #1a1a14;
+  --docs-syn-shell-bullet: #4a7010;
+  --docs-cmd-bg: #9bbc0f;
+  --docs-cmd-text: #0f380f;
+  --docs-cmd-copy-bg: #8bac0f;
+  --docs-cmd-copy-border: rgb(15 56 15 / 0.22);
+  --docs-inline-bg: #f3f3ed;
+  --docs-inline-text: #4a7010;
+  --docs-inline-border: var(--color-border-subtle);
+}
+
+.docs-app .doc-code {
+  margin: var(--space-4) 0;
+  border: 1px solid var(--docs-code-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--docs-code-header-bg);
+}
+
+.docs-app .doc-code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-2) var(--space-4);
+  background: var(--docs-code-header-bg);
+  border-bottom: 1px solid var(--docs-code-border);
+}
+
+.docs-app .doc-code-lang {
+  font-size: var(--text-2xs);
+  font-family: var(--font-mono);
+  font-weight: var(--weight-medium);
+  color: var(--docs-code-header-text);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+}
+
+.docs-app .doc-code-copy {
+  min-height: auto;
+  padding: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  text-transform: uppercase;
+  color: var(--docs-code-header-text);
+}
+
+.docs-app .doc-code-copy:hover {
+  color: var(--color-fg);
+}
+
+.docs-app .doc-code-body {
+  background: var(--docs-code-bg);
+}
+
+.docs-app .doc-code pre {
+  margin: 0;
+  padding: var(--space-4) var(--space-5);
+  overflow-x: auto;
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  font-family: var(--font-mono);
+  color: var(--docs-code-base);
+  background: transparent;
+}
+
+.docs-app .doc-code pre code {
+  font-family: inherit;
+  color: inherit;
+}
+
+.docs-app .doc-code .syn-string {
+  color: var(--docs-syn-string);
+}
+
+.docs-app .doc-code .syn-key {
+  color: var(--docs-syn-key);
+}
+
+.docs-app .doc-code .syn-variable {
+  color: var(--docs-syn-variable);
+}
+
+.docs-app .doc-code .syn-comment {
+  color: var(--docs-syn-comment);
+  font-style: italic;
+}
+
+.docs-app .doc-code .syn-keyword {
+  color: var(--docs-syn-keyword);
+}
+
+.docs-app .doc-code .syn-function {
+  color: var(--docs-syn-function);
+}
+
+.docs-app .doc-code .syn-number {
+  color: var(--docs-syn-number);
+}
+
+.docs-app .doc-code .syn-type {
+  color: var(--docs-syn-type);
+}
+
+.docs-app .doc-code .syn-operator {
+  color: var(--docs-syn-operator);
+}
+
+.docs-app .doc-code .syn-punctuation {
+  color: var(--docs-syn-punctuation);
+}
+
+.docs-app .doc-code .syn-tag {
+  color: var(--docs-syn-keyword);
+}
+
+.docs-app .doc-code .syn-attr {
+  color: var(--docs-syn-function);
+}
+
+/* shell block — label / value / command overrides */
+.docs-app .doc-code--shell .syn-operator {
+  color: var(--docs-syn-operator);
+}
+
+.docs-app .doc-code--shell .syn-function {
+  color: var(--docs-syn-string);
+}
+
+.docs-app .doc-code--shell .syn-variable {
+  color: var(--docs-syn-shell-label);
+}
+
+.docs-app .doc-code--shell .syn-string {
+  color: var(--docs-syn-shell-value);
+}
+
+.docs-app .doc-code--shell .syn-shell-bullet {
+  color: var(--docs-syn-shell-bullet);
+}
+
+.docs-app .doc-code--shell .syn-shell-meta {
+  color: var(--docs-syn-operator);
+}
+
+/* ── command bar (docs) ── */
+
+.docs-app .doc-command {
+  background: var(--color-accent-dim);
+  color: var(--color-accent);
+  border: 1px solid var(--docs-inline-border);
+}
+
+.docs-app .doc-command-copy {
+  background: var(--color-accent-dim);
+  border-left: 1px solid var(--color-accent-border);
+  color: var(--color-accent);
+}
+
+.docs-app .doc-command-copy:hover {
+  opacity: 0.92;
+}
+
+/* ── inline chip (docs) ── */
+
+.docs-app .doc-inline-code {
+  padding: 1px var(--space-2);
+  border-radius: var(--radius-sm);
+  background: var(--docs-inline-bg);
+  border: 1px solid var(--docs-inline-border);
+  font-family: var(--font-mono);
+  font-size: var(--text-inline-code-scale);
+  color: var(--docs-inline-text);
+}

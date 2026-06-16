@@ -1,0 +1,343 @@
+{
+  "title": "Overview",
+  "slug": "overview",
+  "content": [
+    {
+      "type": "heading",
+      "level": 1,
+      "text": "Overview"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The problem"
+    },
+    {
+      "type": "paragraph",
+      "text": "When your team commits code, git captures the change. When your agent explores your codebase to make that change — the files it read, the paths it explored, the prompts that led to specific edits — nothing captures that. It's gone when the session ends."
+    },
+    {
+      "type": "paragraph",
+      "text": "This matters because the exploration is where the context lives. An agent that spent three sessions learning that distiller.ts and task-context.ts always change together, that globals.css is the right place for design token changes, that the MCP server wires through server.ts — that agent is meaningfully faster and more accurate than one starting from scratch. But there's no artifact that carries that knowledge forward."
+    },
+    {
+      "type": "paragraph",
+      "text": "The existing tools don't fill this gap:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "content": [
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "strong",
+              "content": [{ "type": "text", "value": "Git" }]
+            },
+            {
+              "type": "text",
+              "value": " tracks what changed, not what was read or explored to get there."
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "strong",
+              "content": [
+                { "type": "text", "value": "CLAUDE.md and .cursor/rules" }
+              ]
+            },
+            {
+              "type": "text",
+              "value": " capture what you declare — conventions you remember to write down, instructions you decide to give. They don't capture behavioral patterns: which files actually get touched together, which tasks reliably land on which parts of the codebase, what the agent explored before finding the answer."
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "strong",
+              "content": [{ "type": "text", "value": "First-party memory" }]
+            },
+            {
+              "type": "text",
+              "value": " (Cursor Memories, Windsurf memories) captures some agent behavior — but it's per-tool, stored in a proprietary system, and invisible outside that tool. It can't be committed, diffed, reviewed in a PR, or read by a different agent. If someone on your team uses Claude Code while you use Cursor, their sessions don't inform yours."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "There's no shared source of truth for agent behavior across a codebase. No committed artifact that says \"here's what agents actually did, which files they touched together, which tasks led to which edits, across every session and every agent.\" moatlog is that artifact."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Moatlog does"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "type": "text",
+          "value": "Moatlog captures what agents actually do — not what you tell them to do. Hooks fire on every file read, write, prompt, and shell command. The raw events get distilled into "
+        },
+        { "type": "inlineCode", "value": "moat.json" },
+        {
+          "type": "text",
+          "value": ": a compact, committed file that any agent can read before starting work."
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Three properties make this different from existing approaches:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "content": [
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "strong",
+              "content": [
+                { "type": "text", "value": "Observed, not declared." }
+              ]
+            },
+            {
+              "type": "text",
+              "value": " moat.json reflects real agent behavior — which files get touched together, which tasks led to which edits, how file importance changes over sessions. You don't maintain it manually. The more you work, the more accurate it gets."
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "strong",
+              "content": [{ "type": "text", "value": "Git-native." }]
+            },
+            {
+              "type": "text",
+              "value": " moat.json lives in your repo, committed alongside your code. It's diffable, PR-reviewable, and auditable. Team members get behavioral context without replaying your session history. No external service required."
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "strong",
+              "content": [{ "type": "text", "value": "Agent-agnostic." }]
+            },
+            {
+              "type": "text",
+              "value": " One moat.json, any agent. Cursor, Claude Code, and Devin all write to the same event log and read from the same moat. When you switch agents mid-project, context comes with you. When a team member uses a different tool, they still benefit from your sessions."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "command",
+      "command": "npx moatlog init",
+      "description": "Scaffold hooks, MCP config, rules, and .moatlog/ in your project"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Retrieval quality"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "type": "text",
+          "value": "moatlog includes "
+        },
+        { "type": "inlineCode", "value": "moatlog eval" },
+        {
+          "type": "text",
+          "value": " — an offline retrieval quality harness that measures whether "
+        },
+        { "type": "inlineCode", "value": "get_task_context" },
+        {
+          "type": "text",
+          "value": " returns the right files for historical tasks. It uses leave-one-out evaluation: for each high-quality prompt window, hide it from the moat, run retrieval with its task description, check whether the returned files match what the agent actually touched."
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Current results on this repo (moatlog itself, 20 sessions):"
+    },
+    {
+      "type": "code",
+      "language": "text",
+      "code": "hit rate (top 5):     64%\nbaseline hit rate:    75%   (naive: always return the 5 hottest files)"
+    },
+    {
+      "type": "paragraph",
+      "text": "At 20 sessions, task-aware retrieval trails the naive baseline. The failure cases are concentrated in styling tasks where the agent edited app-level files (globals.css, layout.tsx) but the task description doesn't name them — retrieval can't make that connection without either explicit file paths in the task or enough sessions to build the association naturally."
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "type": "strong",
+          "content": [
+            { "type": "text", "value": "Where retrieval works well:" }
+          ]
+        },
+        {
+          "type": "text",
+          "value": " tasks that reference specific files or packages by name return those files accurately. Cross-file retrieval via co-access works once support counts are established — \"fix the distiller\" reliably surfaces task-context.ts alongside distiller.ts."
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "The gap closes as sessions accumulate. Each session adds new keyword→file associations to taskFileSets, and co-access support counts get confirmed across more windows. The naive baseline's advantage weakens as more files become genuinely hot and retrieval can distinguish between them based on task context rather than raw frequency."
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "type": "text",
+          "value": "v0.1.2 adds "
+        },
+        { "type": "inlineCode", "value": "moatlog benchmark --api" },
+        {
+          "type": "text",
+          "value": " — cold vs. warm agent sessions on a fixed task suite, measuring token usage and file-exploration differences directly. The eval harness measures retrieval quality; the benchmark will measure agent behavior."
+        }
+      ]
+    },
+    {
+      "type": "command",
+      "command": "moatlog eval --baseline",
+      "description": "Run leave-one-out retrieval eval on your moat.json"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Built with moatlog"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "type": "text",
+          "value": "moatlog was built using moatlog. Every session that wrote the schema, fixed the attribution bug, built the docs renderer, and designed the merge strategy is captured in "
+        },
+        { "type": "inlineCode", "value": ".moatlog/moat.json" },
+        { "type": "text", "value": " in this repo." }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "The proof section on the landing page shows real current output of moatlog report on this repo. The moat.json file is in the repository — you can read it directly and verify that the numbers match what moatlog status and moatlog report show."
+    },
+    {
+      "type": "paragraph",
+      "text": "Run moatlog eval on your own repo to see retrieval quality on your own codebase. The numbers will differ — a codebase where tasks consistently name specific files will see higher hit rates earlier. A codebase with more implicit, description-only tasks will start lower and improve more slowly."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Who this is for"
+    },
+    {
+      "type": "paragraph",
+      "text": "moatlog is most useful if:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "content": [
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "text",
+              "value": "You use AI agents heavily enough that cold-start friction is genuinely annoying"
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "text",
+              "value": "You use multiple agents and want shared context between them"
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "text",
+              "value": "You work on a team where behavioral memory across developers would help"
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "text",
+              "value": "You care about measuring whether your tooling actually helps, not just whether it feels like it does"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "The setup cost is low — moatlog init takes about a minute. The payoff is proportional to how much you use agents and how complex your codebase is. A small repo worked on occasionally won't accumulate enough moat data for retrieval to outperform cold exploration. A large repo with heavy agent use is where the gap compounds."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Explore"
+    },
+    {
+      "type": "cardGrid",
+      "cols": 2,
+      "cards": [
+        {
+          "type": "card",
+          "title": "Getting Started",
+          "description": "Install the CLI and run moatlog init",
+          "href": "/docs/getting-started"
+        },
+        {
+          "type": "card",
+          "title": "Hooks Reference",
+          "description": "Event capture, hook wiring, and the events JSONL schema",
+          "href": "/docs/hooks"
+        },
+        {
+          "type": "card",
+          "title": "MCP Setup",
+          "description": "Connect moatlog to Cursor or Claude Code",
+          "href": "/docs/mcp"
+        },
+        {
+          "type": "card",
+          "title": "CLI Reference",
+          "description": "moatlog eval, merge, distill, and all commands",
+          "href": "/docs/cli"
+        }
+      ]
+    }
+  ]
+}

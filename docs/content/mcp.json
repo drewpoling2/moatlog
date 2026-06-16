@@ -1,0 +1,234 @@
+{
+  "title": "MCP Setup",
+  "slug": "mcp",
+  "content": [
+    {
+      "type": "heading",
+      "level": 1,
+      "text": "MCP Setup"
+    },
+    {
+      "type": "paragraph",
+      "text": "The Moatlog MCP server exposes behavioral memory as tools your agent can call. It reads moat.json from .moatlog/ and returns hot files, file histories, co-access patterns, and task-relevant context based on past agent sessions."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Available tools"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "content": [
+        {
+          "type": "listItem",
+          "content": [
+            { "type": "inlineCode", "value": "get_hot_files" },
+            {
+              "type": "text",
+              "value": " — top files by agent access frequency"
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            { "type": "inlineCode", "value": "get_file_history" },
+            {
+              "type": "text",
+              "value": " — read/write counts, sessions, co-access for one path"
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            { "type": "inlineCode", "value": "get_co_accessed_files" },
+            {
+              "type": "text",
+              "value": " — files opened in the same sessions as a given file"
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            { "type": "inlineCode", "value": "get_task_context" },
+            {
+              "type": "text",
+              "value": " — files historically relevant to a task description"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Configure your editor"
+    },
+    {
+      "type": "tabs",
+      "items": [
+        {
+          "label": "Cursor",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "If you ran moatlog init, .cursor/mcp.json and .cursor/rules/moatlog.mdc are already configured. Restart Cursor after init so the MCP server connects."
+            },
+            {
+              "type": "paragraph",
+              "text": "To configure manually, add Moatlog to a project-level .cursor/mcp.json or your global ~/.cursor/mcp.json. The server must run with your project root as cwd so it finds .moatlog/moat.json."
+            },
+            {
+              "type": "code",
+              "language": "json",
+              "code": "{\n  \"mcpServers\": {\n    \"moatlog\": {\n      \"command\": \"moatlog\",\n      \"args\": [\"mcp\"]\n    }\n  }\n}"
+            },
+            {
+              "type": "paragraph",
+              "text": "If moatlog is not on your PATH, use the full path to the binary or npx:"
+            },
+            {
+              "type": "code",
+              "language": "json",
+              "code": "{\n  \"mcpServers\": {\n    \"moatlog\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@moatlog/cli\", \"mcp\"]\n    }\n  }\n}"
+            },
+            {
+              "type": "paragraph",
+              "text": "For manual setup, add .cursor/rules/moatlog.mdc with alwaysApply: true so agents call get_task_context at session start."
+            }
+          ]
+        },
+        {
+          "label": "Claude Code",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Add Moatlog to your Claude Code MCP settings. The server uses stdio transport and reads moat.json from the current working directory."
+            },
+            {
+              "type": "code",
+              "language": "json",
+              "code": "{\n  \"mcpServers\": {\n    \"moatlog\": {\n      \"command\": \"moatlog\",\n      \"args\": [\"mcp\"],\n      \"env\": {}\n    }\n  }\n}"
+            },
+            {
+              "type": "paragraph",
+              "text": "Run Claude Code from your project root so the MCP server resolves .moatlog/ correctly. Claude Code agents should call get_task_context before starting significant work, same as Cursor."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Run manually"
+    },
+    {
+      "type": "command",
+      "command": "moatlog mcp",
+      "description": "Start the MCP server on stdio"
+    },
+    {
+      "type": "paragraph",
+      "text": "Use this to test the server or debug tool responses. In normal use, your editor spawns this process automatically from MCP config."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Troubleshooting"
+    },
+    {
+      "type": "paragraph",
+      "text": "If your agent reports that the Moatlog MCP server is missing or tools fail to connect, work through these checks in order."
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "content": [
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "strong",
+              "content": [{ "type": "text", "value": "Build the CLI" }]
+            },
+            {
+              "type": "text",
+              "value": " — project-level .cursor/mcp.json often points at packages/cli/dist/bin.js. Run "
+            },
+            { "type": "inlineCode", "value": "yarn build" },
+            { "type": "text", "value": " from the repo root (or use " },
+            { "type": "inlineCode", "value": "npx @moatlog/cli mcp" },
+            {
+              "type": "text",
+              "value": " in MCP config if you installed from npm)."
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "strong",
+              "content": [{ "type": "text", "value": "Restart Cursor" }]
+            },
+            {
+              "type": "text",
+              "value": " — MCP servers load at startup. After changing mcp.json or building the binary, restart Cursor or reload the moatlog server in Settings → MCP."
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "strong",
+              "content": [{ "type": "text", "value": "Check server status" }]
+            },
+            {
+              "type": "text",
+              "value": " — in Cursor Settings → MCP, Moatlog should show as connected. If it failed on launch, expand the entry for the error (missing binary, wrong cwd, etc.)."
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "strong",
+              "content": [{ "type": "text", "value": "Verify manually" }]
+            },
+            { "type": "text", "value": " — from your project root, run " },
+            { "type": "inlineCode", "value": "moatlog mcp" },
+            {
+              "type": "text",
+              "value": ". You should see \"moatlog MCP server running\" on stderr. If that works but Cursor still fails, the issue is editor config, not the server."
+            }
+          ]
+        },
+        {
+          "type": "listItem",
+          "content": [
+            {
+              "type": "strong",
+              "content": [{ "type": "text", "value": "Start a new chat" }]
+            },
+            {
+              "type": "text",
+              "value": " — after reconnecting MCP, open a fresh agent session so tools are available to the agent."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "variant": "info",
+      "title": "Run moatlog distill before starting a session for best results",
+      "text": "MCP tools read moat.json first. If events have accumulated since the last distill, run moatlog distill (or let the stop hook handle it) so get_task_context returns current hot files and prompt windows."
+    }
+  ]
+}

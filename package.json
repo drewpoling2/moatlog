@@ -5,7 +5,12 @@
   "repository": "github:drewpoling2/moatlog",
   "homepage": "https://moatlog.dev",
   "bugs": "https://github.com/drewpoling2/moatlog/issues",
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/core",
+    "packages/mcp",
+    "packages/cli",
+    "docs"
+  ],
   "engines": { "node": ">=20.0.0" },
   "scripts": {
     "build": "yarn workspace @moatlog/core build && yarn workspace @moatlog/cli build && yarn workspace @moatlog/mcp build"

@@ -1,0 +1,120 @@
+/* ── moatlog · command bar ── */
+
+.doc-command {
+  margin: var(--space-4) 0;
+  display: flex;
+  align-items: stretch;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--color-cmd-bg);
+  color: var(--color-cmd-text);
+}
+
+.doc-command-text {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  overflow-x: auto;
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  font-family: var(--font-mono);
+  font-weight: var(--weight-medium);
+  color: inherit;
+  background: transparent;
+}
+
+.doc-command-text code {
+  font-family: inherit;
+  color: inherit;
+}
+
+.doc-command-copy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 calc(7ch + 2 * var(--space-5));
+  width: calc(7ch + 2 * var(--space-5));
+  align-self: stretch;
+  margin: 0;
+  padding: var(--space-3) var(--space-5);
+  border: 0;
+  border-left: 1px solid var(--color-cmd-copy-border);
+  border-radius: 0;
+  background: var(--color-cmd-copy-bg);
+  color: var(--color-cmd-text);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-none);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background var(--transition-color),
+    opacity var(--transition-color);
+}
+
+.doc-command-copy:hover {
+  opacity: 0.92;
+}
+
+.doc-command-copy:focus-visible {
+  outline: 2px solid var(--color-cmd-text);
+  outline-offset: -2px;
+}
+
+.doc-command-note {
+  margin: var(--space-2) 0 0;
+  font-size: var(--text-xs);
+  color: var(--color-fg-subtle);
+}
+
+/* ── landing terminal device (not docs code blocks) ── */
+
+.landing-terminal.doc-code {
+  margin: var(--space-4) 0;
+  border: var(--border-device);
+  border-radius: var(--radius-device-outer);
+  overflow: hidden;
+  background: var(--color-device-outer);
+}
+
+.landing-terminal .doc-code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-device-outer);
+  border-bottom: var(--border-subtle);
+}
+
+.landing-terminal .doc-code-lang {
+  font-size: var(--text-2xs);
+  font-family: var(--font-mono);
+  font-weight: var(--weight-medium);
+  color: var(--color-device-chrome-text);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+}
+
+.landing-terminal .doc-code-screen {
+  margin: var(--space-3);
+  border-radius: var(--radius-device);
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgb(0 0 0 / 0.04) 2px,
+      rgb(0 0 0 / 0.04) 4px
+    ),
+    var(--color-screen-bg);
+}
