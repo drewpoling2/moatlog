@@ -47,17 +47,16 @@ export function LivePreviewSection({ moatGithubUrl, commands, statusView }: Live
               Moatlog tracks what matters in
               your codebase automatically, so your agent knows where to look.
             </span></h2>
-            {moatGithubUrl ? (
-              <a
-                href={moatGithubUrl}
-                className="landing-split-cta"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View example moat
-                <LandingCtaArrow />
-              </a>
-            ) : null}
+
+            <a
+              href="/docs/getting-started"
+              className="landing-split-cta"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Get started
+              <LandingCtaArrow />
+            </a>
           </div>
 
           <div className="landing-split-visual">

@@ -7,7 +7,7 @@
 }
 
 .site-footer--landing {
-  padding: var(--space-20) var(--space-16) var(--space-12) var(--space-16);
+  padding: var(--space-3) var(--container-landing-px);
 }
 
 .site-footer--landing .site-footer-inner {
@@ -157,15 +157,11 @@
   }
 
   .site-footer--landing .site-footer-inner {
-    padding-inline: var(--space-4);
+    padding-inline: 0;
   }
 
   .site-footer--docs .site-footer-inner {
-    padding-inline: var(--space-4);
-  }
-
-  .site-footer-card {
-    padding: var(--space-8);
+    padding-inline: var(--layout-gutter);
   }
 
   .site-footer-nav {

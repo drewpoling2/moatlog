@@ -75,12 +75,6 @@
 
 @media (max-width: 720px) {
   .docs-sidebar {
-    grid-column: 1;
-    position: static;
-    width: 100%;
-    max-height: none;
-    border-right: 0;
-    border-bottom: var(--border-subtle);
-    padding: 0 0 var(--space-4);
+    display: none;
   }
 }

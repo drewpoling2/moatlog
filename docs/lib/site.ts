@@ -24,6 +24,23 @@ export type FooterLink = {
   external?: boolean;
 };
 
+export type HeaderNavLink = FooterLink;
+
+export function getHeaderNavLinks(): HeaderNavLink[] {
+  const links: HeaderNavLink[] = [{ label: 'Docs', href: '/docs/overview' }];
+
+  if (site.githubRepo) {
+    links.push({ label: 'GitHub', href: site.githubRepo, external: true });
+  }
+
+  const feedbackUrl = getFeedbackUrl();
+  if (feedbackUrl) {
+    links.push({ label: 'Feedback', href: feedbackUrl, external: true });
+  }
+
+  return links;
+}
+
 export function getFooterSections(): Array<{
   title: string;
   links: FooterLink[];

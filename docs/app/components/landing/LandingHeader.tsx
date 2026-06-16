@@ -1,10 +1,11 @@
 import Link from 'next/link'
+import { MobileNavMenu } from '@/app/components/MobileNavMenu'
 import { SiteLogo } from '@/app/components/SiteLogo'
-import { getFeedbackUrl, site } from '@/lib/site'
+import { getHeaderNavLinks } from '@/lib/site'
 import { Button } from '@/app/docs/Button'
 
 export function LandingHeader() {
-  const feedbackUrl = getFeedbackUrl()
+  const links = getHeaderNavLinks()
 
   return (
     <header className="landing-header">
@@ -12,35 +13,29 @@ export function LandingHeader() {
         <SiteLogo />
 
         <nav className="landing-header-nav" aria-label="Site">
-          <Link href="/docs/overview" className="landing-header-link">
-            Docs
-          </Link>
+          {links.map(link =>
+            link.external ? (
+              <a
+                key={link.href}
+                href={link.href}
+                className="landing-header-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {link.label}
+              </a>
+            ) : (
+              <Link key={link.href} href={link.href} className="landing-header-link">
+                {link.label}
+              </Link>
+            )
+          )}
 
-          {site.githubRepo ? (
-            <a
-              href={site.githubRepo}
-              className="landing-header-link"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              GitHub
-            </a>
-          ) : null}
-
-          {feedbackUrl ? (
-            <a
-              href={feedbackUrl}
-              className="landing-header-link"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Feedback
-            </a>
-          ) : null}
-
-          <Button href="/docs/getting-started" variant="outline">
+          <Button href="/docs/getting-started" variant="outline" className="site-header-cta">
             Get Started
           </Button>
+
+          <MobileNavMenu links={links} />
         </nav>
       </div>
     </header>

@@ -493,12 +493,20 @@
 }
 
 @media (max-width: 960px) {
-  .landing-split-grid--device {
+  .landing-split-grid--device,
+  .landing-split--reverse .landing-split-grid--device {
     flex-direction: column;
+    align-items: stretch;
   }
 
   .landing-split-grid--device > .landing-split-copy {
     flex: 1 1 auto;
+    width: 100%;
+  }
+
+  .landing-split-grid--device > .landing-split-visual {
+    flex: 1 1 auto;
+    width: 100%;
   }
 
   .landing-replay-body {

@@ -4,21 +4,32 @@ import { ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
+export type DocNavItem = { title: string; slug: string }
+
 export function SidebarNav({
   docs,
+  variant = 'sidebar',
+  onNavigate,
 }: {
-  docs: { title: string; slug: string }[]
+  docs: DocNavItem[]
+  variant?: 'sidebar' | 'mobile'
+  onNavigate?: () => void
 }) {
   const pathname = usePathname()
+  const listClassName = variant === 'mobile' ? 'site-mobile-nav-docs-list' : 'docs-nav'
 
   return (
-    <ul className="docs-nav">
-      {docs.map((doc) => {
+    <ul className={listClassName}>
+      {docs.map(doc => {
         const href = `/docs/${doc.slug}`
         const active = pathname === href
         return (
           <li key={doc.slug}>
-            <Link href={href} className={active ? 'active' : undefined}>
+            <Link
+              href={href}
+              className={active ? 'active' : undefined}
+              onClick={onNavigate}
+            >
               <span className="docs-nav-marker" aria-hidden="true">
                 <ChevronRight strokeWidth={2} size={14} />
               </span>

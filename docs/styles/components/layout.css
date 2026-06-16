@@ -139,8 +139,13 @@
 }
 
 @media (max-width: 720px) {
-  .docs-header-nav .docs-header-link {
+  .docs-header-nav .docs-header-link,
+  .docs-header-nav .site-header-cta {
     display: none;
+  }
+
+  .site-mobile-nav-toggle {
+    display: inline-flex;
   }
 
   .docs-shell {

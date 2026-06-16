@@ -1,11 +1,8 @@
 export const THEME_STORAGE_KEY = 'moatlog-theme'
 
-export type Theme = 'light' | 'dark'
+export const DEFAULT_THEME: Theme = 'light'
 
-export function getSystemTheme(): Theme {
-  if (typeof window === 'undefined') return 'dark'
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-}
+export type Theme = 'light' | 'dark'
 
 export function getStoredTheme(): Theme | null {
   if (typeof window === 'undefined') return null
@@ -14,7 +11,7 @@ export function getStoredTheme(): Theme | null {
 }
 
 export function resolveTheme(): Theme {
-  return getStoredTheme() ?? getSystemTheme()
+  return getStoredTheme() ?? DEFAULT_THEME
 }
 
 export function applyTheme(theme: Theme) {

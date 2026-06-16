@@ -1,4 +1,6 @@
 import type { Metadata } from 'next'
+import { GoogleAnalytics } from '@next/third-parties/google'
+import { ScrollToTop } from '@/app/components/ScrollToTop'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -6,7 +8,9 @@ export const metadata: Metadata = {
   description: 'Behavioral memory layer for AI coding agents',
 }
 
-const themeScript = `(function(){try{var k='moatlog-theme';var t=localStorage.getItem(k);var theme=t==='light'||t==='dark'?t:(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',theme);document.documentElement.classList.toggle('dark',theme==='dark');}catch(e){}})();`
+const themeScript = `(function(){try{var k='moatlog-theme';var t=localStorage.getItem(k);var theme=t==='light'||t==='dark'?t:'light';document.documentElement.setAttribute('data-theme',theme);document.documentElement.classList.toggle('dark',theme==='dark');}catch(e){}})();`
+
+const gaId = process.env.NEXT_PUBLIC_GA_ID
 
 export default function RootLayout({
   children,
@@ -14,11 +18,15 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" data-theme="light" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body>{children}</body>
+      <body>
+        <ScrollToTop />
+        {children}
+        {gaId ? <GoogleAnalytics gaId={gaId} /> : null}
+      </body>
     </html>
   )
 }

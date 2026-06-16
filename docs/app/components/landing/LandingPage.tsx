@@ -136,8 +136,8 @@ export async function LandingPage() {
                       Every action becomes part of the memory your agent uses next time.
                     </span>
                   </h2>
-                  <Link href="/docs/hooks" className="landing-split-cta">
-                    See how hooks capture activity
+                  <Link href="/docs/getting-started" className="landing-split-cta">
+                    Get started
                     <LandingCtaArrow />
                   </Link>
                 </div>

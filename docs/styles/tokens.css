@@ -226,6 +226,7 @@
   --layout-gutter: var(--space-12);
 
   --z-header: 50;
+  --z-mobile-nav: 100;
   --transition-color: 0.15s ease;
 
   --breakpoint-toc: 1100px;

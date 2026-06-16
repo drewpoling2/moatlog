@@ -11,6 +11,7 @@
     "generate:llms-txt": "tsx scripts/generate-llms-txt.ts"
   },
   "dependencies": {
+    "@next/third-parties": "^16.2.9",
     "lucide-react": "0.383.0",
     "next": "^16.2.9",
     "react": "^19.2.7",

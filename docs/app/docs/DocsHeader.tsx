@@ -1,10 +1,13 @@
 import Link from 'next/link'
+import { MobileNavMenu } from '@/app/components/MobileNavMenu'
 import { SiteLogo } from '@/app/components/SiteLogo'
-import { getFeedbackUrl, site } from '@/lib/site'
+import { getAllDocs } from '@/lib/docs'
+import { getHeaderNavLinks } from '@/lib/site'
 import { Button } from '@/app/docs/Button'
 
 export function DocsHeader() {
-  const feedbackUrl = getFeedbackUrl()
+  const links = getHeaderNavLinks()
+  const docLinks = getAllDocs().map(doc => ({ title: doc.title, slug: doc.slug }))
 
   return (
     <header className="docs-header">
@@ -12,35 +15,29 @@ export function DocsHeader() {
         <SiteLogo />
 
         <nav className="docs-header-nav" aria-label="Site">
-          <Link href="/docs/overview" className="docs-header-link">
-            Docs
-          </Link>
+          {links.map(link =>
+            link.external ? (
+              <a
+                key={link.href}
+                href={link.href}
+                className="docs-header-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {link.label}
+              </a>
+            ) : (
+              <Link key={link.href} href={link.href} className="docs-header-link">
+                {link.label}
+              </Link>
+            )
+          )}
 
-          {site.githubRepo ? (
-            <a
-              href={site.githubRepo}
-              className="docs-header-link"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              GitHub
-            </a>
-          ) : null}
-
-          {feedbackUrl ? (
-            <a
-              href={feedbackUrl}
-              className="docs-header-link"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Feedback
-            </a>
-          ) : null}
-
-          <Button href="/docs/getting-started" variant="outline">
+          <Button href="/docs/getting-started" variant="outline" className="site-header-cta">
             Get Started
           </Button>
+
+          <MobileNavMenu links={links} docLinks={docLinks} />
         </nav>
       </div>
     </header>

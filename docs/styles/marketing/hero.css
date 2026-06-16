@@ -21,7 +21,7 @@
   margin: 0;
   max-width: 47rem;
   font-family: var(--font-heading);
-  font-size: clamp(var(--text-xl), 5vw, var(--text-4xl));
+  font-size: clamp(var(--text-3xl), 5vw, var(--text-4xl));
   font-weight: var(--weight-normal);
   line-height: var(--leading-tight);
   letter-spacing: var(--tracking-tightest);
@@ -42,6 +42,7 @@
   padding: var(--space-1) var(--space-4);
   font-size: var(--text-base);
   white-space: nowrap;
+  width: fit-content;
 }
 
 .landing-hero-btn--primary {
@@ -384,12 +385,31 @@
 }
 
 @media (max-width: 720px) {
+  .landing-hero-panels {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .landing-hero {
+    padding-top: var(--space-12) !important;
+    padding-bottom: var(--space-12) !important;
+  }
+
   .landing-hero-panel--agent {
-    width: 94%;
+    width: 100%;
   }
 
   .landing-hero-panel--moat {
-    width: 72%;
+    position: static;
+    width: 100%;
+    top: auto;
+    right: auto;
+    transform: none;
+  }
+
+  .landing-hero-panel-screen--agent {
+    min-height: auto;
   }
 
   .landing-hero-panel-screen {
@@ -403,6 +423,7 @@
 
   .landing-hero-install-bar {
     flex-basis: auto;
+    width:;
   }
 }
 
