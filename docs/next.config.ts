@@ -1,8 +1,13 @@
 import type { NextConfig } from 'next'
 import path from 'path'
 
+const monorepoRoot = path.join(__dirname, '..')
+
 const nextConfig: NextConfig = {
-  outputFileTracingRoot: path.join(__dirname),
+  turbopack: {
+    root: monorepoRoot,
+  },
+  outputFileTracingRoot: monorepoRoot,
   async redirects() {
     return [
       {
