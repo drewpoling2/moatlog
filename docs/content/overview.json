@@ -1,6 +1,7 @@
 {
   "title": "Overview",
   "slug": "overview",
+  "description": "What moatlog is, why agent behavioral memory matters, and how moat.json fits into your workflow.",
   "content": [
     {
       "type": "heading",

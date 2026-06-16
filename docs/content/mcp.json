@@ -1,6 +1,7 @@
 {
   "title": "MCP Setup",
   "slug": "mcp",
+  "description": "Set up the moatlog MCP server so agents can read behavioral memory via get_task_context and related tools.",
   "content": [
     {
       "type": "heading",

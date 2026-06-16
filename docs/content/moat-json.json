@@ -1,6 +1,7 @@
 {
   "title": "moat.json Reference",
   "slug": "moat-json",
+  "description": "Schema and fields for moat.json — the git-native behavioral memory file moatlog distills from events.",
   "content": [
     {
       "type": "heading",

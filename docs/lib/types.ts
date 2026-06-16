@@ -1,6 +1,7 @@
 export interface DocPage {
   title: string
   slug: string
+  description?: string
   content: DocNode[]
 }
 

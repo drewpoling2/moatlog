@@ -77,9 +77,9 @@
 
   --color-wordmark-border: rgb(255 255 255 / 0.45);
 
-  --color-nav-btn-bg: transparent;
-  --color-nav-btn-text: var(--color-fg);
-  --color-nav-btn-border: rgb(255 255 255 / 0.35);
+  --color-nav-btn-bg: var(--color-fg);
+  --color-nav-btn-text: var(--color-fg-inverted);
+  --color-nav-btn-border: var(--color-fg);
 
   --color-callout-bg: var(--color-bg-elevated);
   --color-callout-border: var(--color-border-subtle);

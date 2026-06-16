@@ -1,6 +1,7 @@
 {
   "title": "Getting Started",
   "slug": "getting-started",
+  "description": "Install moatlog, run init, and configure Cursor or Claude Code so your agent builds memory automatically.",
   "content": [
     {
       "type": "heading",

@@ -4,8 +4,25 @@ import { ScrollToTop } from '@/app/components/ScrollToTop'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'moatlog docs',
-  description: 'Behavioral memory layer for AI coding agents',
+  metadataBase: new URL(process.env.NEXT_PUBLIC_DOCS_URL ?? 'https://moatlog.dev'),
+  title: {
+    default: 'moatlog — behavioral memory for AI coding agents',
+    template: '%s | moatlog',
+  },
+  description:
+    'moatlog captures what your AI coding agent actually does — files touched, patterns repeated — and turns it into git-native memory your agents can use next time. Works with Cursor, Claude Code, and Devin.',
+  openGraph: {
+    title: 'moatlog — behavioral memory for AI coding agents',
+    description: 'Cross-agent memory that lives in your repo, not the cloud.',
+    url: 'https://moatlog.dev',
+    siteName: 'moatlog',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'moatlog — behavioral memory for AI coding agents',
+    description: 'Cross-agent memory that lives in your repo, not the cloud.',
+  },
 }
 
 const themeScript = `(function(){try{var k='moatlog-theme';var t=localStorage.getItem(k);var theme=t==='light'||t==='dark'?t:'light';document.documentElement.setAttribute('data-theme',theme);document.documentElement.classList.toggle('dark',theme==='dark');}catch(e){}})();`

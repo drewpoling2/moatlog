@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getAdjacentDocs, getAllSlugs, getDocBySlug } from '@/lib/docs'
 import { DocPagination } from '../DocPagination'
@@ -8,6 +9,24 @@ import { TableOfContents } from '../TableOfContents'
 
 export function generateStaticParams() {
   return getAllSlugs().map((slug) => ({ slug }))
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+  const { slug } = await params
+  const doc = getDocBySlug(slug)
+
+  if (!doc) {
+    return {}
+  }
+
+  return {
+    title: doc.title,
+    description: doc.description ?? `${doc.title} — moatlog documentation`,
+  }
 }
 
 export default async function DocPage({

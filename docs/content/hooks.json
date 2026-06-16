@@ -1,6 +1,7 @@
 {
   "title": "Hooks Reference",
   "slug": "hooks",
+  "description": "Reference for Cursor and Claude Code hooks that capture agent activity into moatlog event logs.",
   "content": [
     {
       "type": "heading",

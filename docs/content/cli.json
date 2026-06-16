@@ -1,6 +1,7 @@
 {
   "title": "CLI Reference",
   "slug": "cli",
+  "description": "Complete reference for moatlog CLI commands: init, distill, merge, doctor, skills, and more.",
   "content": [
     {
       "type": "heading",

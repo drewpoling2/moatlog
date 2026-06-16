@@ -1,6 +1,7 @@
 {
   "title": "Merge",
   "slug": "merge",
+  "description": "How moatlog merges moat.json conflicts when multiple developers distill independently.",
   "content": [
     {
       "type": "heading",
