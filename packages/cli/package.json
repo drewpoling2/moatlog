@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "description": "CLI for moatlog — behavioral memory layer for AI coding agents",
   "license": "MIT",
+  "repository": "github:drewpoling2/moatlog",
+  "homepage": "https://moatlog.dev",
+  "bugs": "https://github.com/drewpoling2/moatlog/issues",
   "publishConfig": {
     "access": "public"
   },

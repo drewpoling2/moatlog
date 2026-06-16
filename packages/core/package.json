@@ -18,6 +18,9 @@
   "keywords": [],
   "author": "",
   "license": "MIT",
+  "repository": "github:drewpoling2/moatlog",
+  "homepage": "https://moatlog.dev",
+  "bugs": "https://github.com/drewpoling2/moatlog/issues",
   "publishConfig": {
     "access": "public"
   },

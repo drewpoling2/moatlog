@@ -2,6 +2,8 @@
 
 Behavioral memory for AI coding agents.
 
+[GitHub](https://github.com/drewpoling2/moatlog) · [Docs](https://moatlog.dev)
+
 moatlog hooks into Cursor, Claude Code, and Devin to capture what
 your agent reads, writes, and asks. It distills that history into
 `.moatlog/moat.json` — a committed file any agent can read before

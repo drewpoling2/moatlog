@@ -2,6 +2,9 @@
   "name": "moatlog",
   "private": true,
   "license": "MIT",
+  "repository": "github:drewpoling2/moatlog",
+  "homepage": "https://moatlog.dev",
+  "bugs": "https://github.com/drewpoling2/moatlog/issues",
   "workspaces": ["packages/*"],
   "engines": { "node": ">=20.0.0" },
   "scripts": {
